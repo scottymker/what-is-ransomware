@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Ransomware Response Drills — What is Ransomware</title>
+    <meta
+      name="description"
+      content="Choose a hospital, small business, or individual ransomware drill and work through guided briefings, decisions, and checkpoints to build response confidence."
+    />
+    <link rel="preload" href="assets/logo.svg" as="image" type="image/svg+xml" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg-dark: #050914;
+        --bg-panel: rgba(255, 255, 255, 0.07);
+        --bg-muted: rgba(15, 23, 42, 0.65);
+        --accent-blue: #2563eb;
+        --accent-cyan: #22d3ee;
+        --accent-magenta: #c084fc;
+        --accent-orange: #fb923c;
+        --accent-green: #34d399;
+        --text-primary: #f8fafc;
+        --text-muted: #cbd5f5;
+        --shadow-lg: 0 34px 68px -34px rgba(2, 6, 23, 0.9);
+        font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+
+      body {
+        min-height: 100vh;
+        background: radial-gradient(circle at 12% 18%, rgba(34, 211, 238, 0.12), transparent 45%),
+          radial-gradient(circle at 82% 0%, rgba(192, 132, 252, 0.18), transparent 52%),
+          linear-gradient(140deg, var(--bg-dark), #020617 70%, #0b1225 100%);
+        color: var(--text-primary);
+      }
+
+      header {
+        border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+        background: rgba(2, 6, 23, 0.7);
+        backdrop-filter: blur(16px);
+      }
+
+      .container {
+        width: min(1200px, 92vw);
+        margin: 0 auto;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.5rem 0;
+        gap: 1rem;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .brand img {
+        width: 54px;
+        height: 54px;
+      }
+
+      .brand span {
+        display: grid;
+      }
+
+      .brand strong {
+        font-size: 1.05rem;
+        letter-spacing: 0.1em;
+      }
+
+      .brand small {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        opacity: 0.7;
+      }
+
+      .back-link {
+        border: none;
+        background: var(--bg-muted);
+        color: var(--text-muted);
+        padding: 0.7rem 1.2rem;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .back-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 32px -20px rgba(15, 23, 42, 0.85);
+      }
+
+      main {
+        display: grid;
+        gap: 4rem;
+        padding: 3.5rem 0 5rem;
+      }
+
+      h1 {
+        font-size: clamp(2.2rem, 3vw + 1.5rem, 3.4rem);
+        line-height: 1.1;
+        margin-bottom: 1rem;
+      }
+
+      .intro {
+        display: grid;
+        gap: 1.4rem;
+        text-align: left;
+      }
+
+      .intro p {
+        max-width: 780px;
+        color: var(--text-muted);
+        font-size: 1.05rem;
+      }
+
+      .intro .highlights {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.25rem;
+      }
+
+      .highlight-card {
+        background: var(--bg-panel);
+        border-radius: 18px;
+        padding: 1.1rem 1.4rem;
+        min-width: 240px;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .highlight-card strong {
+        display: block;
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+        color: rgba(165, 243, 252, 0.9);
+      }
+
+      .workspace {
+        display: grid;
+        gap: 2rem;
+      }
+
+      .workspace > h2 {
+        font-size: 1.6rem;
+      }
+
+      .selection-grid {
+        display: grid;
+        gap: 1.8rem;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
+
+      .scenario-card {
+        background: linear-gradient(160deg, rgba(37, 99, 235, 0.12), rgba(15, 23, 42, 0.9));
+        border-radius: 20px;
+        padding: 1.8rem;
+        display: grid;
+        gap: 1rem;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(148, 163, 184, 0.15);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .scenario-card::after {
+        content: '';
+        position: absolute;
+        inset: auto -30% -40% 65%;
+        height: 160px;
+        background: radial-gradient(circle, rgba(34, 211, 238, 0.35), transparent 70%);
+        transform: rotate(18deg);
+      }
+
+      .scenario-card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .scenario-card p {
+        color: var(--text-muted);
+        font-size: 0.98rem;
+      }
+
+      .scenario-meta {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        font-size: 0.85rem;
+        color: rgba(191, 219, 254, 0.9);
+      }
+
+      .scenario-card button {
+        justify-self: start;
+      }
+
+      .btn {
+        border: none;
+        border-radius: 999px;
+        padding: 0.85rem 1.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        font-size: 0.95rem;
+        transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+        text-decoration: none;
+        color: white;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--accent-blue), #7c3aed);
+        box-shadow: 0 20px 38px -22px rgba(37, 99, 235, 0.9);
+      }
+
+      .btn-accent {
+        background: linear-gradient(135deg, var(--accent-orange), var(--accent-magenta));
+        box-shadow: 0 20px 38px -22px rgba(251, 146, 60, 0.8);
+      }
+
+      .btn-neutral {
+        background: rgba(15, 23, 42, 0.7);
+        color: var(--text-muted);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        box-shadow: none;
+      }
+
+      .stage-shell {
+        background: rgba(15, 23, 42, 0.85);
+        border-radius: 24px;
+        padding: 2.2rem;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        box-shadow: var(--shadow-lg);
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .stage-progress {
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .stage-progress header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .stage-progress h2 {
+        font-size: 1.45rem;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(148, 163, 184, 0.2);
+        overflow: hidden;
+      }
+
+      .progress-bar span {
+        display: block;
+        height: 100%;
+        background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+        width: 0;
+      }
+
+      .stage-content {
+        display: grid;
+        gap: 1.3rem;
+      }
+
+      .stage-content p,
+      .stage-content li {
+        color: var(--text-muted);
+        font-size: 1.01rem;
+      }
+
+      .stage-card {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .stage-card h3 {
+        font-size: 1.3rem;
+      }
+
+      .callout {
+        background: rgba(37, 99, 235, 0.14);
+        border-left: 3px solid rgba(37, 99, 235, 0.5);
+        padding: 1rem 1.2rem;
+        border-radius: 12px;
+      }
+
+      .intel-options,
+      .decision-options,
+      .quiz-block {
+        display: grid;
+        gap: 0.9rem;
+      }
+
+      .intel-options label,
+      .decision-options label,
+      .quiz-block label {
+        display: flex;
+        gap: 0.7rem;
+        align-items: flex-start;
+        background: rgba(15, 23, 42, 0.7);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 16px;
+        padding: 0.85rem 1rem;
+        line-height: 1.4;
+        cursor: pointer;
+      }
+
+      .intel-options input,
+      .decision-options input,
+      .quiz-block input {
+        margin-top: 0.25rem;
+      }
+
+      .stage-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .stage-controls .btn-group {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .feedback {
+        font-size: 0.95rem;
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        background: rgba(34, 211, 238, 0.12);
+        color: rgba(165, 243, 252, 0.95);
+        display: none;
+      }
+
+      .feedback.error {
+        background: rgba(239, 68, 68, 0.12);
+        color: rgba(254, 202, 202, 0.95);
+      }
+
+      .hint {
+        margin-top: 0.6rem;
+        padding: 0.65rem 0.9rem;
+        border-radius: 12px;
+        background: rgba(59, 130, 246, 0.12);
+        color: rgba(191, 219, 254, 0.95);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        font-size: 0.92rem;
+        display: none;
+      }
+
+      .stage-card.has-error {
+        border-color: rgba(239, 68, 68, 0.45);
+        box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.2);
+      }
+
+      .checkpoint-list {
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .checkpoint-list label {
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+        background: rgba(37, 99, 235, 0.12);
+        border-radius: 16px;
+        padding: 0.85rem 1rem;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+      }
+
+      .celebration {
+        text-align: center;
+        display: grid;
+        gap: 1.5rem;
+        background: rgba(15, 23, 42, 0.86);
+        border-radius: 28px;
+        padding: 3rem 2rem;
+        border: 1px solid rgba(34, 211, 238, 0.25);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .celebration h2 {
+        font-size: 2.2rem;
+      }
+
+      .celebration p {
+        color: var(--text-muted);
+        max-width: 640px;
+        margin: 0 auto;
+      }
+
+      .celebration ul {
+        list-style: none;
+        display: grid;
+        gap: 0.6rem;
+        padding: 0;
+        margin: 0;
+        color: rgba(165, 243, 252, 0.95);
+      }
+
+      .defeat-metric {
+        margin: 0 auto;
+        padding: 1rem 1.25rem;
+        border-radius: 18px;
+        background: rgba(15, 23, 42, 0.75);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        max-width: 520px;
+        display: grid;
+        gap: 0.4rem;
+        text-align: left;
+      }
+
+      .defeat-metric strong {
+        color: rgba(226, 232, 240, 0.95);
+      }
+
+      .defeat-metric[data-tier='low'] {
+        border-color: rgba(52, 211, 153, 0.45);
+        background: rgba(15, 118, 110, 0.18);
+      }
+
+      .defeat-metric[data-tier='moderate'] {
+        border-color: rgba(59, 130, 246, 0.45);
+        background: rgba(30, 64, 175, 0.18);
+      }
+
+      .defeat-metric[data-tier='high'] {
+        border-color: rgba(234, 179, 8, 0.55);
+        background: rgba(146, 64, 14, 0.18);
+      }
+
+      .defeat-metric[data-tier='critical'] {
+        border-color: rgba(239, 68, 68, 0.6);
+        background: rgba(127, 29, 29, 0.2);
+      }
+
+      footer {
+        border-top: 1px solid rgba(148, 163, 184, 0.2);
+        padding: 2rem 0;
+        color: rgba(148, 163, 184, 0.8);
+        font-size: 0.9rem;
+        text-align: center;
+      }
+
+      @media (max-width: 720px) {
+        nav {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .stage-shell {
+          padding: 1.6rem;
+        }
+
+        .stage-controls {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .stage-controls .btn-group {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .stage-controls .btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .highlight-card {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <a class="brand" href="index.html">
+            <img src="assets/logo.svg" alt="What is Ransomware logo" />
+            <span>
+              <strong>WHAT IS RANSOMWARE</strong>
+              <small>Interactive Drill Series</small>
+            </span>
+          </a>
+          <a class="back-link" href="index.html">← Back to learning hub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="intro" aria-labelledby="intro-title">
+        <h1 id="intro-title">Interactive Ransomware Response Drills</h1>
+        <p>
+          Choose a scenario tailored for hospitals, small businesses, or individuals. Each drill guides your team through
+          unfolding events, critical decisions, and readiness checkpoints so you cannot skip ahead—you earn the
+          conclusion by working every step.
+        </p>
+        <div class="highlights" role="list">
+          <div class="highlight-card" role="listitem">
+            <strong>STRUCTURED FOR TEAMS</strong>
+            <p>Designed for workshops, tabletop exercises, or self-paced cohorts that want guided collaboration.</p>
+          </div>
+          <div class="highlight-card" role="listitem">
+            <strong>EST. 30–45 MINUTES</strong>
+            <p>Plan for focused sessions that move from situational awareness to response action and reflection.</p>
+          </div>
+          <div class="highlight-card" role="listitem">
+            <strong>CHECKPOINT CONTROL</strong>
+            <p>Progress is locked until you complete quizzes, investigations, and decision briefings at every stage.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="workspace" aria-labelledby="workspace-title">
+        <h2 id="workspace-title">Choose your drill</h2>
+        <div id="scenario-selection" class="selection-grid" aria-live="polite"></div>
+
+        <section id="stage-view" class="stage-shell" hidden aria-live="polite">
+          <div class="stage-progress">
+            <header>
+              <div>
+                <p id="scenario-name"></p>
+                <h2 id="stage-title"></h2>
+              </div>
+              <span id="stage-counter"></span>
+            </header>
+            <div class="progress-bar" aria-hidden="true"><span id="progress-bar"></span></div>
+          </div>
+          <div id="stage-content" class="stage-content"></div>
+          <div class="stage-controls">
+            <div class="btn-group">
+              <button id="prev-stage" class="btn btn-neutral" type="button">Previous stage</button>
+              <button id="restart" class="btn btn-neutral" type="button">Restart drill</button>
+            </div>
+            <button id="next-stage" class="btn btn-primary" type="button" disabled>Locked — complete this stage</button>
+          </div>
+        </section>
+
+        <section id="celebration" class="celebration" hidden aria-live="polite">
+          <h2 id="celebration-title"></h2>
+          <p id="celebration-message"></p>
+          <div id="defeat-summary" class="defeat-metric" hidden>
+            <p><strong>Defeat probability:</strong> <span id="defeat-percent"></span></p>
+            <p id="defeat-tier"></p>
+            <p id="defeat-breakdown"></p>
+          </div>
+          <ul id="celebration-list"></ul>
+          <div class="stage-controls" style="justify-content: center">
+            <button id="try-again" class="btn btn-accent" type="button">Run another drill</button>
+            <a class="btn btn-neutral" href="index.html">Return to the learning hub</a>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      © <span id="year"></span> What is Ransomware — interactive drills for resilient teams.
+    </footer>
+
+    <script>
+      const scenarios = {
+        hospital: {
+          name: 'Regional Hospital Network Drill',
+          duration: 'Approx. 40 minutes',
+          description:
+            'Stabilize patient services after a night-shift compromise of clinical workstations while coordinating with emergency leadership.',
+          focus: 'Patient safety, clinical continuity, regulated reporting',
+          stages: [
+            {
+              type: 'briefing',
+              title: 'Incident Command Briefing',
+              description:
+                'It is 05:15 and night shift nurses cannot access the electronic medical record (EMR). Several radiology workstations display a ransom splash screen demanding 30 Bitcoin.',
+              objectives: [
+                'Stabilize life-critical services by shifting to downtime procedures within 10 minutes.',
+                'Establish a joint incident command with clinical leadership, IT, and compliance.',
+                'Decide which systems must be isolated before the ransom note deadline.',
+              ],
+              acknowledgement: 'We have aligned on the mission priorities and are ready to assess telemetry.',
+            },
+            {
+              type: 'intel',
+              title: 'Review Telemetry and Nurse Reports',
+              prompt:
+                'From overnight logs, nurse hotline notes, and the SIEM console, mark every detail that signals malicious activity. Ignore normal operations to keep the team focused.',
+              options: [
+                {
+                  label: 'Radiology imaging server initiated outbound SMB traffic to an unfamiliar IP at 03:12.',
+                  correct: true,
+                },
+                { label: 'Automated EHR backup completed successfully at 02:00.', correct: false },
+                {
+                  label: 'Multiple medication dispensing cabinets show files renamed with a .lockbit extension.',
+                  correct: true,
+                },
+                {
+                  label: 'Help desk ticket: “Wi-Fi feels slow in pediatrics waiting room.”',
+                  correct: false,
+                },
+                {
+                  label: 'Endpoint detection reported antivirus disabled on three oncology nursing stations.',
+                  correct: true,
+                },
+              ],
+              success:
+                'Correct — the imaging server lateral movement, encrypted cabinets, and disabled defenses confirm an active campaign.',
+              failure:
+                'One or more selections are off. Revisit the evidence and focus on clear indicators of compromise.',
+              hints: [
+                'Look for overnight activity that signals unauthorized access or data encryption in progress.',
+                'Disabled protections or renamed files are stronger clues than routine maintenance successes.',
+              ],
+            },
+            {
+              type: 'decision',
+              title: 'Containment Priority Call',
+              question:
+                'Which action should incident command authorize first to contain spread without jeopardizing patient safety?',
+              options: [
+                'Shut down the entire hospital network immediately and divert all patients.',
+                'Segment radiology and oncology VLANs, forcing them to an isolated switch stack, while activating manual charting.',
+                'Pay the ransom to quickly regain diagnostic systems and resume care.',
+              ],
+              answerIndex: 1,
+              explanation:
+                'Segmenting the affected VLANs maintains core life-support equipment while halting lateral movement. An all-out shutdown or immediate payment would create patient risk and reward the attacker.',
+              hints: [
+                'Prioritize containment moves that keep lifesaving systems operating while stopping the spread.',
+                'Avoid strategies that either disrupt critical care entirely or reward the attackers.',
+              ],
+            },
+            {
+              type: 'quiz',
+              title: 'Clinical Communications Check',
+              questions: [
+                {
+                  prompt: 'Which channel should broadcast downtime procedures to bedside teams within five minutes?',
+                  options: [
+                    'Group text message from the CISO’s personal phone',
+                    'Code Rose announcement and the clinical incident command paging tree',
+                    'An email from IT titled “Ransomware detected”',
+                  ],
+                  answerIndex: 1,
+                  explanation:
+                    'Hospitals practice Code Rose/Code Grey announcements and structured paging trees to reach every unit in minutes. Email or ad-hoc texting is too slow and unreliable during care operations.',
+                  hints: [
+                    'Choose the method that rapidly reaches every clinical unit with rehearsed language.',
+                    'Think about hospital emergency codes and paging trees rather than ad-hoc texts or emails.',
+                  ],
+                },
+                {
+                  prompt: 'Who must be briefed before reconnecting the EMR from backups?',
+                  options: [
+                    'Only the infrastructure engineer restoring the servers',
+                    'Clinical leadership, privacy officer, and legal counsel',
+                    'Just the radiology vendor responsible for the compromised system',
+                  ],
+                  answerIndex: 1,
+                  explanation:
+                    'Restoration decisions affect care delivery, compliance reporting, and contractual obligations—multidisciplinary alignment is required.',
+                  hints: [
+                    'Consider all leaders whose approvals are needed before touching regulated patient data.',
+                    'Restoring the EMR impacts clinical care, compliance, and legal exposure at the same time.',
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'checkpoint',
+              title: 'Stabilization Checkpoint',
+              prompt:
+                'Confirm each stabilization action with the team before moving into full recovery operations. These checks ensure nothing mission-critical was skipped.',
+              tasks: [
+                'Downtime medication administration records are distributed to impacted units.',
+                'Regional ambulance partners received diversion guidance for elective procedures.',
+                'Legal and compliance logged the incident in the regulatory reporting tracker.',
+                'Forensic imaging began on one encrypted workstation for evidence preservation.',
+              ],
+            },
+            {
+              type: 'wrapup',
+              title: 'Lessons for the After Action Review',
+              summary: [
+                'Catalog every manual workflow triggered today and ensure playbooks specify time-to-complete expectations.',
+                'Revisit segmentation between diagnostic devices and core hospital systems to reduce blast radius.',
+                'Update vendor contacts and maintenance windows for rapid containment coordination.',
+              ],
+              encouragement:
+                'Clinical command praised your decisive actions and requested quarterly tabletop refreshers. Document open questions while momentum is high.',
+            },
+          ],
+          celebration: {
+            message:
+              'Your hospital incident command team contained ransomware while sustaining safe patient care. You balanced containment with clinical obligations—an accomplishment worth sharing.',
+            highlights: [
+              'Patient safety remained the guiding metric for every containment move.',
+              'Regulatory and forensic steps were integrated before recovery work began.',
+              'The team now has clear follow-up items for the official after-action review.',
+            ],
+          },
+        },
+        smb: {
+          name: 'Small Business Resilience Drill',
+          duration: 'Approx. 35 minutes',
+          description:
+            'Guide a 70-person manufacturing firm through a ransomware strike that threatens payroll, production scheduling, and customer confidence.',
+          focus: 'Cash flow continuity, vendor communication, leadership alignment',
+          stages: [
+            {
+              type: 'briefing',
+              title: 'Morning Stand-up Alert',
+              description:
+                'It is Monday at 08:20. Production floor tablets display a skull-and-crossbones demand. The finance share drive is encrypted and payroll is due in 48 hours.',
+              objectives: [
+                'Protect revenue by prioritizing systems that impact customer orders and payroll.',
+                'Coordinate with managed service providers for containment and recovery.',
+                'Craft transparent messages for employees, suppliers, and top customers.',
+              ],
+              acknowledgement: 'Leadership understands the stakes and commits to clear communication throughout the drill.',
+            },
+            {
+              type: 'intel',
+              title: 'Separate Noise from Signal',
+              prompt:
+                'Your managed detection provider sent overnight alerts. Tag the indicators that confirm an intrusion versus routine maintenance.',
+              options: [
+                {
+                  label: 'RDP login from an IP in another country outside business hours.',
+                  correct: true,
+                },
+                { label: 'Completed Windows Update on HR laptops at 02:00.', correct: false },
+                {
+                  label: 'Script creating shadow copies across file servers marked as failed.',
+                  correct: true,
+                },
+                {
+                  label: 'Quarterly vulnerability scan kicked off at 01:00.',
+                  correct: false,
+                },
+                {
+                  label: 'New administrative account “svc-backup-temp” added without change request.',
+                  correct: true,
+                },
+              ],
+              success:
+                'Great eye — the foreign RDP login, failed shadow copies, and unauthorized admin account confirm active compromise.',
+              failure:
+                'Re-evaluate and focus on behaviors that deviate from expected maintenance or change plans.',
+              hints: [
+                'Zero in on off-hours access and system changes you did not authorize.',
+                'Failed backups or surprise admin accounts are stronger clues than routine updates.',
+              ],
+            },
+            {
+              type: 'decision',
+              title: 'Cash-Flow Safeguard',
+              question:
+                'What is the smartest first move to protect payroll and revenue obligations while containment unfolds?',
+              options: [
+                'Announce a week-long shutdown to regroup.',
+                'Call the bank to pause ACH payroll because systems are down.',
+                'Activate manual invoicing and payroll contingency documented during business continuity planning.',
+              ],
+              answerIndex: 2,
+              explanation:
+                'Manual invoicing and payroll backups keep cash moving while IT restores systems. A shutdown or bank pause would magnify impact and damage trust.',
+              hints: [
+                'Choose the path that keeps revenue and payroll moving without alarming stakeholders.',
+                'Avoid options that halt operations or make customers and employees panic.',
+              ],
+            },
+            {
+              type: 'quiz',
+              title: 'Stakeholder Messaging Drill',
+              questions: [
+                {
+                  prompt: 'What should the CEO emphasize in the first employee town hall?',
+                  options: [
+                    'Speculate about the attacker’s identity to rally the team',
+                    'Share what is known, actions underway, and where employees should route issues',
+                    'Promise bonuses once the ransom is paid',
+                  ],
+                  answerIndex: 1,
+                  explanation:
+                    'Transparency about facts, next steps, and reporting channels builds confidence without overpromising.',
+                  hints: [
+                    'Employees want clear facts, current actions, and how to report issues.',
+                    'Speculation or big promises can backfire—stick to verified updates and guidance.',
+                  ],
+                },
+                {
+                  prompt: 'How should you update top customers waiting on shipments?',
+                  options: [
+                    'Stay silent until everything is fixed to avoid panic',
+                    'Send a concise notice about temporary delays and the expected timeline for updates',
+                    'Ask them to pay invoices early to help with recovery costs',
+                  ],
+                  answerIndex: 1,
+                  explanation:
+                    'Proactive notice with timelines maintains trust. Silence fuels rumors and unusual payment requests erode credibility.',
+                  hints: [
+                    'Customers respond best to proactive, honest timelines when issues arise.',
+                    'Silence or unusual payment requests can damage trust faster than a short delay.',
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'checkpoint',
+              title: 'Business Continuity Gate',
+              prompt:
+                'Confirm the following actions with your continuity lead before authorizing production to resume.',
+              tasks: [
+                'Critical suppliers received verified alternative file transfer instructions.',
+                'Manual inventory tracking is live and cross-checked for accuracy.',
+                'Legal counsel reviewed ransomware insurance notification requirements.',
+                'An employee assistance channel for payroll issues is staffed and published.',
+              ],
+            },
+            {
+              type: 'wrapup',
+              title: 'Profit & Trust Recovery Notes',
+              summary: [
+                'Document every manual process and calculate the true cost to build the business case for segmentation and MFA expansion.',
+                'Validate backups for finance systems weekly so payroll contingencies remain current.',
+                'Schedule a supplier tabletop exercise to align expectations before the next incident.',
+              ],
+              encouragement:
+                'Employees appreciated timely updates and leadership alignment. Capture wins and lessons before regular operations resume.',
+            },
+          ],
+          celebration: {
+            message:
+              'Your manufacturing crew protected payroll, maintained customer confidence, and navigated tough calls under pressure. That is resilience in action.',
+            highlights: [
+              'Manual business continuity plans activated exactly when needed.',
+              'Stakeholders were informed quickly with consistent, trusted messaging.',
+              'Insurance, legal, and supplier relationships are ready for the formal review.',
+            ],
+          },
+        },
+        individual: {
+          name: 'Individual & Family Drill',
+          duration: 'Approx. 30 minutes',
+          description:
+            'Walk through a personal ransomware scenario that starts with a phishing message and escalates to encrypted family photos and tax documents.',
+          focus: 'Personal data protection, backup habits, calm decision-making',
+          stages: [
+            {
+              type: 'briefing',
+              title: 'Family Readiness Brief',
+              description:
+                'Saturday morning you receive an email saying a delivery failed. After opening the attachment, every device on your home network begins showing a ransomware timer demanding $2,000 in gift cards.',
+              objectives: [
+                'Avoid panic and identify which devices are compromised versus safe.',
+                'Protect financial accounts and sensitive identity documents.',
+                'Plan recovery steps that do not feed the attackers or spread the malware further.',
+              ],
+              acknowledgement: 'Everyone in the household understands the situation and is ready to move step-by-step.',
+            },
+            {
+              type: 'intel',
+              title: 'Spot the Warning Signs',
+              prompt:
+                'Review the last 12 hours of activity. Check each behavior that signals compromise or risky behavior you must address.',
+              options: [
+                { label: 'Browser download prompt for “Delivery_Document.zip” from an unknown sender.', correct: true },
+                {
+                  label: 'Automatic cloud photo backup completed at 01:00 as scheduled.',
+                  correct: false,
+                },
+                { label: 'Smart TV shows pop-up asking for remote access approval.', correct: true },
+                { label: 'Antivirus updated successfully yesterday afternoon.', correct: false },
+                {
+                  label: 'Teenager installed an unofficial game mod from a torrent site on the family PC.',
+                  correct: true,
+                },
+              ],
+              success:
+                'Yes — the suspicious download, remote access request, and unofficial mod all open the door for ransomware.',
+              failure:
+                'Recheck the list. Focus on risky downloads and access prompts, not normal maintenance.',
+              hints: [
+                'Start with downloads or prompts from people you do not recognize.',
+                'Untrusted mods and remote access pop-ups are classic warning signs of ransomware.',
+              ],
+            },
+            {
+              type: 'decision',
+              title: 'First Protective Move',
+              question:
+                'What should you do immediately after confirming ransomware on the home network?',
+              options: [
+                'Disconnect affected devices from Wi-Fi and power them down to stop spread.',
+                'Pay the ransom using prepaid gift cards to avoid losing access.',
+                'Post on social media asking for decryption keys from strangers.',
+              ],
+              answerIndex: 0,
+              explanation:
+                'Isolating devices and powering them down prevents further encryption and protects unaffected systems.',
+              hints: [
+                'Think about the fastest way to stop the malware from spreading any further.',
+                'Paying attackers or crowdsourcing help exposes you to more risk—focus on containment first.',
+              ],
+            },
+            {
+              type: 'quiz',
+              title: 'Personal Recovery Knowledge Check',
+              questions: [
+                {
+                  prompt: 'Where should you restore files from once devices are clean?',
+                  options: [
+                    'The attackers’ website after payment',
+                    'Offline or cloud backups created before the infection',
+                    'USB drives mailed from anonymous helpers online',
+                  ],
+                  answerIndex: 1,
+                  explanation:
+                    'Only trusted backups made before the attack are safe to restore. Anything from attackers or strangers may reinfect devices.',
+                  hints: [
+                    'Look for backups you controlled before the attack began.',
+                    'If the source is tied to attackers or strangers, it is too risky to trust.',
+                  ],
+                },
+                {
+                  prompt: 'How do you protect financial accounts during the incident?',
+                  options: [
+                    'Log in from the infected computer to monitor activity',
+                    'Use a clean device to change passwords and enable MFA',
+                    'Ignore accounts until files are recovered',
+                  ],
+                  answerIndex: 1,
+                  explanation:
+                    'Secure accounts from a clean device and add MFA so attackers cannot pivot into finances or identity theft.',
+                  hints: [
+                    'Secure your accounts from a device you know is clean.',
+                    'Adding multi-factor authentication keeps attackers out even if they stole a password.',
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'checkpoint',
+              title: 'Household Assurance Gate',
+              prompt:
+                'Confirm the following before declaring victory. Everyone should understand the path forward.',
+              tasks: [
+                'Clean devices have updated antivirus and a full scan scheduled.',
+                'Family password manager entries are rotated and stored securely.',
+                'Offline backup drive is disconnected and stored safely.',
+                'Incident details and suspicious emails are reported to the FTC/IC3 for awareness.',
+              ],
+            },
+            {
+              type: 'wrapup',
+              title: 'Long-Term Confidence Plan',
+              summary: [
+                'Create a monthly digital hygiene night to patch systems and review backups together.',
+                'Teach the household how to validate delivery and financial emails before opening attachments.',
+                'Inventory critical data and ensure at least one offline or immutable backup exists.',
+              ],
+              encouragement:
+                'Your household is calm, coordinated, and empowered. Celebrate the teamwork and reinforce smart online habits.',
+            },
+          ],
+          celebration: {
+            message:
+              'You guided your household through a stressful ransomware scare, prioritized safety, and mapped a stronger future posture. Outstanding leadership!',
+            highlights: [
+              'Devices were isolated quickly to prevent wider impact.',
+              'Backups and MFA kept priceless memories and accounts safe.',
+              'Everyone left with clear habits to maintain readiness.',
+            ],
+          },
+        },
+      };
+
+      const selectionEl = document.getElementById('scenario-selection');
+      const stageView = document.getElementById('stage-view');
+      const celebrationEl = document.getElementById('celebration');
+      const stageTitle = document.getElementById('stage-title');
+      const stageCounter = document.getElementById('stage-counter');
+      const stageContent = document.getElementById('stage-content');
+      const progressBar = document.getElementById('progress-bar');
+      const scenarioName = document.getElementById('scenario-name');
+      const nextButton = document.getElementById('next-stage');
+      const prevButton = document.getElementById('prev-stage');
+      const restartButton = document.getElementById('restart');
+      const celebrationTitle = document.getElementById('celebration-title');
+      const celebrationMessage = document.getElementById('celebration-message');
+      const celebrationList = document.getElementById('celebration-list');
+      const defeatSummary = document.getElementById('defeat-summary');
+      const defeatPercentEl = document.getElementById('defeat-percent');
+      const defeatTierEl = document.getElementById('defeat-tier');
+      const defeatBreakdownEl = document.getElementById('defeat-breakdown');
+      const tryAgainButton = document.getElementById('try-again');
+
+      const state = {
+        scenarioKey: null,
+        stageIndex: 0,
+        mistakes: 0,
+        totalChallenges: 0,
+        hintProgress: {},
+      };
+
+      function computeTotalChallenges(scenario) {
+        return scenario.stages.reduce((total, stage) => {
+          if (stage.type === 'quiz') {
+            return total + stage.questions.length;
+          }
+          if (stage.type === 'decision' || stage.type === 'intel') {
+            return total + 1;
+          }
+          return total;
+        }, 0);
+      }
+
+      function getStageKey(suffix = '') {
+        return `${state.scenarioKey ?? 'none'}-${state.stageIndex}${suffix}`;
+      }
+
+      function revealHint(hints, key, container) {
+        if (!hints || hints.length === 0 || !container) return;
+        const used = state.hintProgress[key] || 0;
+        const index = Math.min(used, hints.length - 1);
+        container.textContent = `Hint: ${hints[index]}`;
+        container.style.display = 'block';
+        state.hintProgress[key] = used + 1;
+      }
+
+      function recordMistake({ hints, key, container, count = 1 }) {
+        state.mistakes += count;
+        revealHint(hints, key, container);
+      }
+
+      function renderScenarioSelection() {
+        selectionEl.innerHTML = '';
+        Object.entries(scenarios).forEach(([key, scenario]) => {
+          const card = document.createElement('article');
+          card.className = 'scenario-card';
+          card.innerHTML = `
+            <div>
+              <h3>${scenario.name}</h3>
+              <p>${scenario.description}</p>
+            </div>
+            <div class="scenario-meta">
+              <span>🕒 ${scenario.duration}</span>
+              <span>🎯 ${scenario.focus}</span>
+            </div>
+            <button class="btn btn-accent" type="button" data-scenario="${key}">Start this drill</button>
+          `;
+          selectionEl.appendChild(card);
+        });
+      }
+
+      function setStageComplete() {
+        nextButton.disabled = false;
+        nextButton.textContent =
+          state.stageIndex === scenarios[state.scenarioKey].stages.length - 1
+            ? 'Finish drill'
+            : 'Continue to next stage';
+      }
+
+      function lockStageProgress(message = 'Locked — complete this stage') {
+        nextButton.disabled = true;
+        nextButton.textContent = message;
+      }
+
+      function handleIntelStage(stage) {
+        const form = document.createElement('form');
+        form.className = 'intel-options';
+        form.setAttribute('aria-describedby', 'intel-feedback');
+
+        stage.options.forEach((option, index) => {
+          const id = `intel-${state.stageIndex}-${index}`;
+          const label = document.createElement('label');
+          label.setAttribute('for', id);
+          label.innerHTML = `<input type="checkbox" id="${id}" value="${index}" /> <span>${option.label}</span>`;
+          form.appendChild(label);
+        });
+
+        const submit = document.createElement('button');
+        submit.type = 'submit';
+        submit.className = 'btn btn-primary';
+        submit.textContent = 'Submit findings';
+
+        const feedback = document.createElement('div');
+        feedback.id = 'intel-feedback';
+        feedback.className = 'feedback';
+
+        const hintBox = document.createElement('div');
+        hintBox.className = 'hint';
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'stage-card';
+        wrapper.innerHTML = `<p class="callout">${stage.prompt}</p>`;
+        wrapper.appendChild(form);
+        wrapper.appendChild(submit);
+        wrapper.appendChild(feedback);
+        wrapper.appendChild(hintBox);
+        stageContent.appendChild(wrapper);
+
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const checked = Array.from(form.querySelectorAll('input[type="checkbox"]:checked')).map((input) =>
+            Number(input.value)
+          );
+          const correctIndexes = stage.options
+            .map((option, idx) => (option.correct ? idx : null))
+            .filter((idx) => idx !== null);
+          const incorrectSelection = checked.some((idx) => !stage.options[idx].correct);
+          const missedSelection = correctIndexes.some((idx) => !checked.includes(idx));
+
+          if (!incorrectSelection && !missedSelection) {
+            feedback.textContent = stage.success;
+            feedback.classList.remove('error');
+            feedback.style.display = 'block';
+            setStageComplete();
+          } else {
+            feedback.textContent = stage.failure;
+            feedback.classList.add('error');
+            feedback.style.display = 'block';
+            recordMistake({
+              hints: stage.hints,
+              key: getStageKey(),
+              container: hintBox,
+            });
+            lockStageProgress('Locked — revisit this stage');
+          }
+        });
+      }
+
+      function handleDecisionStage(stage) {
+        const form = document.createElement('form');
+        form.className = 'decision-options';
+
+        stage.options.forEach((option, index) => {
+          const id = `decision-${state.stageIndex}-${index}`;
+          const label = document.createElement('label');
+          label.setAttribute('for', id);
+          label.innerHTML = `<input type="radio" name="decision" id="${id}" value="${index}" required /> <span>${option}</span>`;
+          form.appendChild(label);
+        });
+
+        const submit = document.createElement('button');
+        submit.type = 'submit';
+        submit.className = 'btn btn-primary';
+        submit.textContent = 'Lock in decision';
+
+        const feedback = document.createElement('div');
+        feedback.className = 'feedback';
+
+        const hintBox = document.createElement('div');
+        hintBox.className = 'hint';
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'stage-card';
+        wrapper.innerHTML = `<p class="callout">${stage.question}</p>`;
+        wrapper.appendChild(form);
+        wrapper.appendChild(submit);
+        wrapper.appendChild(feedback);
+        wrapper.appendChild(hintBox);
+        stageContent.appendChild(wrapper);
+
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const selected = Number(form.querySelector('input[name="decision"]:checked').value);
+          if (selected === stage.answerIndex) {
+            feedback.textContent = stage.explanation;
+            feedback.classList.remove('error');
+            feedback.style.display = 'block';
+            setStageComplete();
+          } else {
+            feedback.textContent = 'Not quite. Discuss as a team and choose the action that protects your mission goals.';
+            feedback.classList.add('error');
+            feedback.style.display = 'block';
+            recordMistake({
+              hints: stage.hints,
+              key: getStageKey(),
+              container: hintBox,
+            });
+            lockStageProgress('Locked — choose the right response');
+          }
+        });
+      }
+
+      function handleQuizStage(stage) {
+        const form = document.createElement('form');
+        form.className = 'quiz-block';
+
+        const fieldsets = [];
+        const hintBoxes = [];
+
+        stage.questions.forEach((question, qIndex) => {
+          const fieldset = document.createElement('fieldset');
+          fieldset.className = 'stage-card';
+          const legend = document.createElement('legend');
+          legend.textContent = question.prompt;
+          fieldset.appendChild(legend);
+
+          question.options.forEach((option, optionIndex) => {
+            const id = `quiz-${state.stageIndex}-${qIndex}-${optionIndex}`;
+            const label = document.createElement('label');
+            label.setAttribute('for', id);
+            label.innerHTML = `<input type="radio" name="quiz-${qIndex}" id="${id}" value="${optionIndex}" required /> <span>${option}</span>`;
+            fieldset.appendChild(label);
+          });
+
+          const hintBox = document.createElement('div');
+          hintBox.className = 'hint';
+          fieldset.appendChild(hintBox);
+
+          fieldsets.push(fieldset);
+          hintBoxes.push(hintBox);
+          form.appendChild(fieldset);
+        });
+
+        const submit = document.createElement('button');
+        submit.type = 'submit';
+        submit.className = 'btn btn-primary';
+        submit.textContent = 'Submit knowledge check';
+
+        const feedback = document.createElement('div');
+        feedback.className = 'feedback';
+
+        stageContent.appendChild(form);
+        stageContent.appendChild(submit);
+        stageContent.appendChild(feedback);
+
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const incorrectQuestions = [];
+
+          stage.questions.forEach((question, index) => {
+            const selected = form.querySelector(`input[name="quiz-${index}"]:checked`);
+            if (!selected || Number(selected.value) !== question.answerIndex) {
+              incorrectQuestions.push(index);
+              fieldsets[index].classList.add('has-error');
+              recordMistake({
+                hints: question.hints,
+                key: getStageKey(`-q${index}`),
+                container: hintBoxes[index],
+              });
+            } else {
+              fieldsets[index].classList.remove('has-error');
+            }
+          });
+
+          if (incorrectQuestions.length === 0) {
+            feedback.textContent = 'Excellent work. Your communications and recovery plans are on point for this scenario.';
+            feedback.classList.remove('error');
+            feedback.style.display = 'block';
+            setStageComplete();
+          } else {
+            feedback.textContent = 'Some answers need attention. Review your selections and discuss why certain options strengthen the response.';
+            feedback.classList.add('error');
+            feedback.style.display = 'block';
+            lockStageProgress('Locked — address the knowledge gaps');
+          }
+        });
+      }
+
+      function handleCheckpointStage(stage) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'stage-card';
+        wrapper.innerHTML = `<p class="callout">${stage.prompt}</p>`;
+
+        const list = document.createElement('div');
+        list.className = 'checkpoint-list';
+
+        stage.tasks.forEach((task, index) => {
+          const id = `checkpoint-${state.stageIndex}-${index}`;
+          const label = document.createElement('label');
+          label.setAttribute('for', id);
+          label.innerHTML = `<input type="checkbox" id="${id}" /> <span>${task}</span>`;
+          list.appendChild(label);
+        });
+
+        const feedback = document.createElement('div');
+        feedback.className = 'feedback';
+        feedback.textContent = 'All tasks confirmed — your team is ready for the next phase.';
+
+        const confirmBtn = document.createElement('button');
+        confirmBtn.type = 'button';
+        confirmBtn.className = 'btn btn-primary';
+        confirmBtn.textContent = 'Confirm checkpoint';
+
+        confirmBtn.addEventListener('click', () => {
+          const unchecked = list.querySelectorAll('input[type="checkbox"]:not(:checked)');
+          if (unchecked.length === 0) {
+            feedback.classList.remove('error');
+            feedback.style.display = 'block';
+            setStageComplete();
+          } else {
+            feedback.textContent = 'Every task must be acknowledged before moving forward.';
+            feedback.classList.add('error');
+            feedback.style.display = 'block';
+            lockStageProgress('Locked — finish the checkpoint');
+          }
+        });
+
+        wrapper.appendChild(list);
+        wrapper.appendChild(confirmBtn);
+        wrapper.appendChild(feedback);
+        stageContent.appendChild(wrapper);
+      }
+
+      function handleWrapupStage(stage) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'stage-card';
+        wrapper.innerHTML = `<p class="callout">${stage.encouragement}</p>`;
+
+        const list = document.createElement('ul');
+        list.className = 'checkpoint-list';
+        list.style.border = 'none';
+        list.style.background = 'transparent';
+        list.style.padding = '0';
+
+        stage.summary.forEach((item) => {
+          const li = document.createElement('li');
+          li.style.listStyle = 'disc';
+          li.style.marginInlineStart = '1.5rem';
+          li.style.background = 'transparent';
+          li.style.border = 'none';
+          li.textContent = item;
+          list.appendChild(li);
+        });
+
+        const readyBtn = document.createElement('button');
+        readyBtn.type = 'button';
+        readyBtn.className = 'btn btn-primary';
+        readyBtn.textContent = 'Log lessons learned';
+
+        readyBtn.addEventListener('click', () => {
+          setStageComplete();
+        });
+
+        wrapper.appendChild(list);
+        wrapper.appendChild(readyBtn);
+        stageContent.appendChild(wrapper);
+      }
+
+      function renderStage() {
+        const scenario = scenarios[state.scenarioKey];
+        const stage = scenario.stages[state.stageIndex];
+
+        scenarioName.textContent = `${scenario.name} · ${scenario.duration}`;
+        stageTitle.textContent = stage.title;
+        stageCounter.textContent = `Stage ${state.stageIndex + 1} of ${scenario.stages.length}`;
+        progressBar.style.width = `${((state.stageIndex) / scenario.stages.length) * 100}%`;
+
+        stageContent.innerHTML = '';
+        lockStageProgress();
+
+        if (stage.type === 'briefing') {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'stage-card';
+          const description = document.createElement('p');
+          description.textContent = stage.description;
+          const list = document.createElement('ul');
+          list.className = 'checkpoint-list';
+          stage.objectives.forEach((objective) => {
+            const li = document.createElement('li');
+            li.style.listStyle = 'disc';
+            li.style.marginInlineStart = '1.5rem';
+            li.style.background = 'transparent';
+            li.style.border = 'none';
+            li.textContent = objective;
+            list.appendChild(li);
+          });
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'btn btn-primary';
+          button.textContent = 'Acknowledge briefing';
+          button.addEventListener('click', () => {
+            setStageComplete();
+          });
+          const acknowledgement = document.createElement('p');
+          acknowledgement.textContent = stage.acknowledgement;
+          acknowledgement.className = 'callout';
+          wrapper.appendChild(description);
+          wrapper.appendChild(list);
+          wrapper.appendChild(acknowledgement);
+          wrapper.appendChild(button);
+          stageContent.appendChild(wrapper);
+        } else if (stage.type === 'intel') {
+          handleIntelStage(stage);
+        } else if (stage.type === 'decision') {
+          handleDecisionStage(stage);
+        } else if (stage.type === 'quiz') {
+          handleQuizStage(stage);
+        } else if (stage.type === 'checkpoint') {
+          handleCheckpointStage(stage);
+        } else if (stage.type === 'wrapup') {
+          handleWrapupStage(stage);
+        }
+
+        prevButton.disabled = state.stageIndex === 0;
+      }
+
+      function startScenario(key) {
+        state.scenarioKey = key;
+        state.stageIndex = 0;
+        state.mistakes = 0;
+        state.hintProgress = {};
+        state.totalChallenges = computeTotalChallenges(scenarios[key]);
+        stageView.hidden = false;
+        celebrationEl.hidden = true;
+        celebrationTitle.textContent = '';
+        celebrationMessage.textContent = '';
+        celebrationList.innerHTML = '';
+        defeatSummary.hidden = true;
+        defeatSummary.dataset.tier = '';
+        defeatPercentEl.textContent = '';
+        defeatTierEl.textContent = '';
+        defeatBreakdownEl.textContent = '';
+        selectionEl.setAttribute('hidden', '');
+        renderStage();
+      }
+
+      function showCelebration() {
+        const scenario = scenarios[state.scenarioKey];
+        stageView.hidden = true;
+        celebrationEl.hidden = false;
+        celebrationTitle.textContent = '👏 Mission accomplished!';
+        celebrationMessage.textContent = scenario.celebration.message;
+        celebrationList.innerHTML = '';
+        scenario.celebration.highlights.forEach((highlight) => {
+          const li = document.createElement('li');
+          li.textContent = `• ${highlight}`;
+          celebrationList.appendChild(li);
+        });
+
+        if (state.totalChallenges > 0) {
+          const defeatRatio = Math.min(1, state.mistakes / state.totalChallenges);
+          const defeatPercent = Math.round(defeatRatio * 100);
+          let tier = 'low';
+          let tierTitle = 'Low defeat risk';
+          let tierMessage = 'Your responses stayed sharp with only minimal course corrections.';
+
+          if (defeatPercent > 80) {
+            tier = 'critical';
+            tierTitle = 'Critical defeat risk';
+            tierMessage = 'Frequent missteps show a need for deeper practice before facing live attacks.';
+          } else if (defeatPercent > 50) {
+            tier = 'high';
+            tierTitle = 'High defeat risk';
+            tierMessage = 'Several pivots were required—tighten playbooks and drills to close the gaps.';
+          } else if (defeatPercent > 20) {
+            tier = 'moderate';
+            tierTitle = 'Moderate defeat risk';
+            tierMessage = 'Solid fundamentals, but there are still refinement opportunities to harden defenses.';
+          }
+
+          defeatSummary.hidden = false;
+          defeatSummary.dataset.tier = tier;
+          defeatPercentEl.textContent = `${defeatPercent}%`;
+          defeatTierEl.textContent = `${tierTitle} — ${tierMessage}`;
+          const adjustmentsLabel = state.mistakes === 1 ? 'adjustment' : 'adjustments';
+          const checkpointsLabel = state.totalChallenges === 1 ? 'checkpoint' : 'checkpoints';
+          defeatBreakdownEl.textContent = `${state.mistakes} ${adjustmentsLabel} across ${state.totalChallenges} challenge ${checkpointsLabel}.`;
+        } else {
+          defeatSummary.hidden = true;
+        }
+      }
+
+      selectionEl.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-scenario]');
+        if (!button) return;
+        const key = button.getAttribute('data-scenario');
+        startScenario(key);
+      });
+
+      nextButton.addEventListener('click', () => {
+        if (nextButton.disabled) return;
+        const scenario = scenarios[state.scenarioKey];
+        if (state.stageIndex < scenario.stages.length - 1) {
+          state.stageIndex += 1;
+          renderStage();
+        } else {
+          showCelebration();
+        }
+      });
+
+      prevButton.addEventListener('click', () => {
+        if (state.stageIndex > 0) {
+          state.stageIndex -= 1;
+          renderStage();
+        }
+      });
+
+      restartButton.addEventListener('click', () => {
+        if (!state.scenarioKey) return;
+        state.stageIndex = 0;
+        state.mistakes = 0;
+        state.hintProgress = {};
+        state.totalChallenges = computeTotalChallenges(scenarios[state.scenarioKey]);
+        renderStage();
+      });
+
+      tryAgainButton.addEventListener('click', () => {
+        celebrationEl.hidden = true;
+        selectionEl.removeAttribute('hidden');
+        stageView.hidden = true;
+        state.scenarioKey = null;
+        state.stageIndex = 0;
+        state.mistakes = 0;
+        state.hintProgress = {};
+        state.totalChallenges = 0;
+        defeatSummary.hidden = true;
+        defeatSummary.dataset.tier = '';
+        celebrationTitle.textContent = '';
+        celebrationMessage.textContent = '';
+        celebrationList.innerHTML = '';
+        defeatPercentEl.textContent = '';
+        defeatTierEl.textContent = '';
+        defeatBreakdownEl.textContent = '';
+      });
+
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      renderScenarioSelection();
+    </script>
+  </body>
+</html>
