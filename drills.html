@@ -549,7 +549,52 @@
 
       <section class="workspace" aria-labelledby="workspace-title">
         <h2 id="workspace-title">Choose your drill</h2>
-        <div id="scenario-selection" class="selection-grid" aria-live="polite"></div>
+        <div id="scenario-selection" class="selection-grid" aria-live="polite">
+          <article class="scenario-card" data-scenario-card="hospital">
+            <div>
+              <h3>Regional Hospital Network Drill</h3>
+              <p>
+                Stabilize patient services after a night-shift compromise of clinical workstations while coordinating with
+                emergency leadership.
+              </p>
+            </div>
+            <div class="scenario-meta">
+              <span>🕒 Approx. 40 minutes</span>
+              <span>🎯 Patient safety, clinical continuity, regulated reporting</span>
+            </div>
+            <button class="btn btn-accent" type="button" data-scenario="hospital">Start this drill</button>
+          </article>
+
+          <article class="scenario-card" data-scenario-card="smb">
+            <div>
+              <h3>Small Business Resilience Drill</h3>
+              <p>
+                Guide a 70-person manufacturing firm through a ransomware strike that threatens payroll, production scheduling,
+                and customer confidence.
+              </p>
+            </div>
+            <div class="scenario-meta">
+              <span>🕒 Approx. 35 minutes</span>
+              <span>🎯 Cash flow continuity, vendor communication, leadership alignment</span>
+            </div>
+            <button class="btn btn-accent" type="button" data-scenario="smb">Start this drill</button>
+          </article>
+
+          <article class="scenario-card" data-scenario-card="individual">
+            <div>
+              <h3>Individual &amp; Family Drill</h3>
+              <p>
+                Walk through a personal ransomware scenario that starts with a phishing message and escalates to encrypted family
+                photos and tax documents.
+              </p>
+            </div>
+            <div class="scenario-meta">
+              <span>🕒 Approx. 30 minutes</span>
+              <span>🎯 Personal device safety, backup discipline, fraud prevention</span>
+            </div>
+            <button class="btn btn-accent" type="button" data-scenario="individual">Start this drill</button>
+          </article>
+        </div>
 
         <section id="stage-view" class="stage-shell" hidden aria-live="polite">
           <div class="stage-progress">
@@ -580,8 +625,7 @@
             <p id="defeat-tier"></p>
             <p id="defeat-breakdown"></p>
           </div>
-          <h2>👏 Mission accomplished!</h2>
-          <p id="celebration-message"></p>
+
           <ul id="celebration-list"></ul>
           <div class="stage-controls" style="justify-content: center">
             <button id="try-again" class="btn btn-accent" type="button">Run another drill</button>
@@ -648,7 +692,6 @@
                 'Look for overnight activity that signals unauthorized access or data encryption in progress.',
                 'Disabled protections or renamed files are stronger clues than routine maintenance successes.',
               ],
-              
             },
             {
               type: 'decision',
@@ -667,7 +710,6 @@
                 'Prioritize containment moves that keep lifesaving systems operating while stopping the spread.',
                 'Avoid strategies that either disrupt critical care entirely or reward the attackers.',
               ],
-
             },
             {
               type: 'quiz',
@@ -687,7 +729,6 @@
                     'Choose the method that rapidly reaches every clinical unit with rehearsed language.',
                     'Think about hospital emergency codes and paging trees rather than ad-hoc texts or emails.',
                   ],
-
                 },
                 {
                   prompt: 'Who must be briefed before reconnecting the EMR from backups?',
@@ -703,7 +744,6 @@
                     'Consider all leaders whose approvals are needed before touching regulated patient data.',
                     'Restoring the EMR impacts clinical care, compliance, and legal exposure at the same time.',
                   ],
-
                 },
               ],
             },
@@ -1035,8 +1075,7 @@
       const defeatPercentEl = document.getElementById('defeat-percent');
       const defeatTierEl = document.getElementById('defeat-tier');
       const defeatBreakdownEl = document.getElementById('defeat-breakdown');
-      const celebrationMessage = document.getElementById('celebration-message');
-      const celebrationList = document.getElementById('celebration-list');
+      
       const tryAgainButton = document.getElementById('try-again');
 
       const state = {
@@ -1078,10 +1117,35 @@
       }
 
       function renderScenarioSelection() {
+        const existingCards = selectionEl.querySelectorAll('[data-scenario-card]');
+        if (existingCards.length > 0) {
+          existingCards.forEach((card) => {
+            const key = card.getAttribute('data-scenario-card');
+            const scenario = scenarios[key];
+            if (!scenario) return;
+            const heading = card.querySelector('h3');
+            const description = card.querySelector('p');
+            const metaSpans = card.querySelectorAll('.scenario-meta span');
+            const button = card.querySelector('button[data-scenario]');
+            if (heading) heading.textContent = scenario.name;
+            if (description) description.textContent = scenario.description;
+            if (metaSpans[0]) metaSpans[0].textContent = `🕒 ${scenario.duration}`;
+            if (metaSpans[1]) metaSpans[1].textContent = `🎯 ${scenario.focus}`;
+            if (button) button.setAttribute('data-scenario', key);
+          });
+          return;
+        }
+
+        Object.entries(scenarios).forEach(([key, scenario]) => {
+          const card = document.createElement('article');
+          card.className = 'scenario-card';
+          card.setAttribute('data-scenario-card', key);
+
         selectionEl.innerHTML = '';
         Object.entries(scenarios).forEach(([key, scenario]) => {
           const card = document.createElement('article');
           card.className = 'scenario-card';
+
           card.innerHTML = `
             <div>
               <h3>${scenario.name}</h3>
@@ -1193,7 +1257,7 @@
 
         const feedback = document.createElement('div');
         feedback.className = 'feedback';
-        
+
         const hintBox = document.createElement('div');
         hintBox.className = 'hint';
 
@@ -1231,10 +1295,9 @@
       function handleQuizStage(stage) {
         const form = document.createElement('form');
         form.className = 'quiz-block';
-        
+
         const fieldsets = [];
         const hintBoxes = [];
-
 
         stage.questions.forEach((question, qIndex) => {
           const fieldset = document.createElement('fieldset');
@@ -1289,6 +1352,7 @@
             } else {
               fieldsets[index].classList.remove('has-error');
             }
+
           const incorrectQuestions = stage.questions.filter((question, index) => {
             const selected = form.querySelector(`input[name="quiz-${index}"]:checked`);
             return !selected || Number(selected.value) !== question.answerIndex;
@@ -1462,8 +1526,10 @@
         defeatPercentEl.textContent = '';
         defeatTierEl.textContent = '';
         defeatBreakdownEl.textContent = '';
+
         stageView.hidden = false;
         celebrationEl.hidden = true;
+
         selectionEl.setAttribute('hidden', '');
         renderStage();
       }
