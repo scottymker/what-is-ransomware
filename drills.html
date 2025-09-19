@@ -348,7 +348,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        flex-wrap: wrap;
+        flex-wrap:  wrap;
         gap: 1rem;
       }
 
@@ -1345,10 +1345,6 @@
             } else {
               fieldsets[index].classList.remove('has-error');
             }
-
-          const incorrectQuestions = stage.questions.filter((question, index) => {
-            const selected = form.querySelector(`input[name="quiz-${index}"]:checked`);
-            return !selected || Number(selected.value) !== question.answerIndex;
           });
 
           if (incorrectQuestions.length === 0) {
@@ -1519,8 +1515,6 @@
         defeatPercentEl.textContent = '';
         defeatTierEl.textContent = '';
         defeatBreakdownEl.textContent = '';
-        stageView.hidden = false;
-        celebrationEl.hidden = true;
         selectionEl.setAttribute('hidden', '');
         renderStage();
       }
