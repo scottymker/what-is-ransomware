@@ -625,6 +625,7 @@
             <p id="defeat-tier"></p>
             <p id="defeat-breakdown"></p>
           </div>
+
           <ul id="celebration-list"></ul>
           <div class="stage-controls" style="justify-content: center">
             <button id="try-again" class="btn btn-accent" type="button">Run another drill</button>
@@ -1074,6 +1075,7 @@
       const defeatPercentEl = document.getElementById('defeat-percent');
       const defeatTierEl = document.getElementById('defeat-tier');
       const defeatBreakdownEl = document.getElementById('defeat-breakdown');
+      
       const tryAgainButton = document.getElementById('try-again');
 
       const state = {
@@ -1138,6 +1140,12 @@
           const card = document.createElement('article');
           card.className = 'scenario-card';
           card.setAttribute('data-scenario-card', key);
+
+        selectionEl.innerHTML = '';
+        Object.entries(scenarios).forEach(([key, scenario]) => {
+          const card = document.createElement('article');
+          card.className = 'scenario-card';
+
           card.innerHTML = `
             <div>
               <h3>${scenario.name}</h3>
@@ -1344,6 +1352,10 @@
             } else {
               fieldsets[index].classList.remove('has-error');
             }
+
+          const incorrectQuestions = stage.questions.filter((question, index) => {
+            const selected = form.querySelector(`input[name="quiz-${index}"]:checked`);
+            return !selected || Number(selected.value) !== question.answerIndex;
           });
 
           if (incorrectQuestions.length === 0) {
@@ -1514,6 +1526,10 @@
         defeatPercentEl.textContent = '';
         defeatTierEl.textContent = '';
         defeatBreakdownEl.textContent = '';
+
+        stageView.hidden = false;
+        celebrationEl.hidden = true;
+
         selectionEl.setAttribute('hidden', '');
         renderStage();
       }
