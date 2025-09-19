@@ -1,730 +1,717 @@
-diff --git a/index.html b/index.html
-index 8b137891791fe96927ad78e64b0aad7bded08bdc..90d48e273b93d769dc159ccb46cbd96a3d9c3cd0 100644
---- a/index.html
-+++ b/index.html
-@@ -1 +1,725 @@
-+<!DOCTYPE html>
-+<html lang="en">
-+  <head>
-+    <meta charset="UTF-8" />
-+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-+    <title>What is Ransomware — Cybersecurity Awareness Project</title>
-+    <meta
-+      name="description"
-+      content="What is Ransomware is a free cybersecurity awareness project offering practical education, readiness tools, and response guidance for individuals and organizations."
-+    />
-+    <link rel="preload" href="assets/logo.svg" as="image" type="image/svg+xml" />
-+    <style>
-+      :root {
-+        color-scheme: light dark;
-+        --bg-dark: #0b1220;
-+        --bg-muted: #111a2e;
-+        --bg-panel: rgba(255, 255, 255, 0.06);
-+        --accent-red: #f64a4a;
-+        --accent-blue: #3b82f6;
-+        --accent-cyan: #22d3ee;
-+        --text-primary: #f9fafb;
-+        --text-muted: #cbd5f5;
-+        --shadow-lg: 0 30px 60px -25px rgba(0, 0, 0, 0.6);
-+        --shadow-sm: 0 12px 25px -15px rgba(15, 23, 42, 0.8);
-+        font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
-+      }
- 
-+      * {
-+        box-sizing: border-box;
-+        margin: 0;
-+      }
-+
-+      body {
-+        background: radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.12), transparent 50%),
-+          radial-gradient(circle at 80% 0%, rgba(59, 130, 246, 0.18), transparent 55%),
-+          linear-gradient(135deg, var(--bg-dark), #030712);
-+        color: var(--text-primary);
-+        min-height: 100vh;
-+        line-height: 1.6;
-+      }
-+
-+      header {
-+        padding: 1.25rem 0;
-+      }
-+
-+      .container {
-+        width: min(1200px, 92vw);
-+        margin: 0 auto;
-+      }
-+
-+      nav {
-+        display: flex;
-+        justify-content: space-between;
-+        align-items: center;
-+        gap: 1rem;
-+      }
-+
-+      .brand {
-+        display: flex;
-+        align-items: center;
-+        gap: 0.75rem;
-+        text-decoration: none;
-+        color: inherit;
-+      }
-+
-+      .brand img {
-+        width: 58px;
-+        height: 58px;
-+        filter: drop-shadow(0 18px 24px rgba(2, 12, 27, 0.6));
-+      }
-+
-+      .brand span {
-+        display: grid;
-+      }
-+
-+      .brand strong {
-+        font-size: 1.05rem;
-+        letter-spacing: 0.1em;
-+      }
-+
-+      .brand small {
-+        font-size: 0.75rem;
-+        text-transform: uppercase;
-+        opacity: 0.75;
-+      }
-+
-+      .cta-group {
-+        display: flex;
-+        align-items: center;
-+        gap: 0.75rem;
-+        flex-wrap: wrap;
-+      }
-+
-+      .btn {
-+        border: none;
-+        border-radius: 999px;
-+        padding: 0.85rem 1.6rem;
-+        font-weight: 600;
-+        cursor: pointer;
-+        display: inline-flex;
-+        align-items: center;
-+        gap: 0.6rem;
-+        font-size: 0.95rem;
-+        transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
-+        text-decoration: none;
-+      }
-+
-+      .btn-primary {
-+        background: linear-gradient(135deg, #2563eb, #7c3aed);
-+        color: white;
-+        box-shadow: 0 18px 38px -18px rgba(59, 130, 246, 0.8);
-+      }
-+
-+      .btn-secondary {
-+        background: rgba(15, 23, 42, 0.65);
-+        color: var(--text-muted);
-+        border: 1px solid rgba(148, 163, 184, 0.25);
-+      }
-+
-+      .btn-quiz {
-+        background: linear-gradient(135deg, #f97316, #ef4444);
-+        color: white;
-+        box-shadow: 0 18px 38px -18px rgba(239, 68, 68, 0.8);
-+      }
-+
-+      .btn:hover {
-+        transform: translateY(-3px);
-+      }
-+
-+      main {
-+        display: grid;
-+        gap: 6rem;
-+        padding-bottom: 6rem;
-+      }
-+
-+      section {
-+        position: relative;
-+      }
-+
-+      .hero {
-+        margin-top: 3.5rem;
-+        display: grid;
-+        gap: 3rem;
-+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-+        align-items: center;
-+      }
-+
-+      .hero h1 {
-+        font-size: clamp(2.4rem, 3vw + 2rem, 3.75rem);
-+        line-height: 1.1;
-+        margin-bottom: 1.5rem;
-+        text-shadow: 0 18px 28px rgba(3, 7, 18, 0.8);
-+      }
-+
-+      .hero p {
-+        font-size: 1.05rem;
-+        color: var(--text-muted);
-+        margin-bottom: 2rem;
-+        max-width: 540px;
-+      }
-+
-+      .hero-card {
-+        background: linear-gradient(160deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.65));
-+        border-radius: 26px;
-+        padding: 2.5rem;
-+        box-shadow: var(--shadow-lg);
-+        border: 1px solid rgba(148, 163, 184, 0.22);
-+        backdrop-filter: blur(16px);
-+      }
-+
-+      .hero-card h2 {
-+        text-transform: uppercase;
-+        letter-spacing: 0.22em;
-+        font-size: 0.85rem;
-+        color: var(--accent-cyan);
-+        margin-bottom: 1.25rem;
-+      }
-+
-+      .insight-grid {
-+        display: grid;
-+        gap: 1.5rem;
-+      }
-+
-+      .insight {
-+        padding: 1.5rem;
-+        border-radius: 18px;
-+        background: rgba(15, 23, 42, 0.55);
-+        border: 1px solid rgba(148, 163, 184, 0.2);
-+        box-shadow: var(--shadow-sm);
-+      }
-+
-+      .insight strong {
-+        font-size: 1.5rem;
-+        color: var(--accent-cyan);
-+      }
-+
-+      .section-title {
-+        font-size: clamp(2rem, 2vw + 1.5rem, 2.6rem);
-+        margin-bottom: 2rem;
-+      }
-+
-+      .section-title span {
-+        color: var(--accent-red);
-+      }
-+
-+      .content-grid {
-+        display: grid;
-+        gap: 1.5rem;
-+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-+      }
-+
-+      .card {
-+        background: rgba(11, 18, 32, 0.75);
-+        border: 1px solid rgba(148, 163, 184, 0.2);
-+        border-radius: 22px;
-+        padding: 1.75rem;
-+        box-shadow: var(--shadow-sm);
-+        transition: transform 0.3s ease;
-+        backdrop-filter: blur(12px);
-+      }
-+
-+      .card:hover {
-+        transform: translateY(-6px);
-+      }
-+
-+      .card h3 {
-+        margin-bottom: 0.75rem;
-+        font-size: 1.25rem;
-+      }
-+
-+      .card p {
-+        color: var(--text-muted);
-+        font-size: 0.98rem;
-+      }
-+
-+      .stat-grid {
-+        display: grid;
-+        gap: 1.5rem;
-+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-+      }
-+
-+      .stat-card {
-+        background: rgba(15, 23, 42, 0.65);
-+        border-radius: 20px;
-+        padding: 1.75rem;
-+        border: 1px solid rgba(59, 130, 246, 0.25);
-+        box-shadow: var(--shadow-sm);
-+      }
-+
-+      .stat-card strong {
-+        font-size: 2.2rem;
-+        display: block;
-+        margin-bottom: 0.35rem;
-+        color: var(--accent-blue);
-+      }
-+
-+      .timeline {
-+        position: relative;
-+        padding-left: 1.5rem;
-+        display: grid;
-+        gap: 1.75rem;
-+      }
-+
-+      .timeline::before {
-+        content: '';
-+        position: absolute;
-+        left: 8px;
-+        top: 0;
-+        bottom: 0;
-+        width: 2px;
-+        background: linear-gradient(180deg, rgba(59, 130, 246, 0.6), rgba(226, 232, 240, 0));
-+      }
-+
-+      .timeline-step {
-+        position: relative;
-+        padding-left: 1.75rem;
-+      }
-+
-+      .timeline-step::before {
-+        content: '';
-+        position: absolute;
-+        left: -1.5rem;
-+        top: 0.45rem;
-+        width: 12px;
-+        height: 12px;
-+        border-radius: 50%;
-+        border: 2px solid var(--accent-blue);
-+        background: var(--bg-dark);
-+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
-+      }
-+
-+      .timeline-step h4 {
-+        margin-bottom: 0.4rem;
-+      }
-+
-+      .badge {
-+        display: inline-flex;
-+        align-items: center;
-+        gap: 0.35rem;
-+        padding: 0.4rem 0.85rem;
-+        border-radius: 999px;
-+        background: rgba(59, 130, 246, 0.12);
-+        color: var(--accent-cyan);
-+        font-size: 0.78rem;
-+        letter-spacing: 0.08em;
-+        text-transform: uppercase;
-+        margin-bottom: 0.75rem;
-+      }
-+
-+      .faq {
-+        display: grid;
-+        gap: 1rem;
-+      }
-+
-+      details {
-+        background: rgba(11, 18, 32, 0.7);
-+        border-radius: 18px;
-+        border: 1px solid rgba(148, 163, 184, 0.25);
-+        padding: 1.2rem 1.5rem;
-+        transition: border 0.2s ease;
-+      }
-+
-+      details[open] {
-+        border-color: rgba(59, 130, 246, 0.5);
-+      }
-+
-+      summary {
-+        cursor: pointer;
-+        font-weight: 600;
-+        display: flex;
-+        align-items: center;
-+        justify-content: space-between;
-+      }
-+
-+      summary::after {
-+        content: '+';
-+        font-size: 1.3rem;
-+        transition: transform 0.3s ease;
-+      }
-+
-+      details[open] summary::after {
-+        transform: rotate(45deg);
-+      }
-+
-+      footer {
-+        border-top: 1px solid rgba(148, 163, 184, 0.2);
-+        padding: 3rem 0 4rem;
-+        background: rgba(2, 6, 23, 0.7);
-+      }
-+
-+      footer p {
-+        color: rgba(226, 232, 240, 0.55);
-+      }
-+
-+      .resource-list {
-+        list-style: none;
-+        display: grid;
-+        gap: 1rem;
-+        margin-top: 1.25rem;
-+      }
-+
-+      .resource-item {
-+        display: flex;
-+        align-items: flex-start;
-+        gap: 1rem;
-+        padding: 1.1rem 1.3rem;
-+        border-radius: 16px;
-+        background: rgba(15, 23, 42, 0.55);
-+        border: 1px solid rgba(148, 163, 184, 0.18);
-+      }
-+
-+      .resource-item span {
-+        background: rgba(59, 130, 246, 0.18);
-+        color: var(--accent-blue);
-+        font-weight: 700;
-+        width: 36px;
-+        height: 36px;
-+        display: grid;
-+        place-items: center;
-+        border-radius: 50%;
-+      }
-+
-+      form {
-+        display: grid;
-+        gap: 1rem;
-+        margin-top: 1.5rem;
-+      }
-+
-+      label {
-+        font-size: 0.9rem;
-+        letter-spacing: 0.05em;
-+        text-transform: uppercase;
-+        color: var(--text-muted);
-+      }
-+
-+      input, textarea {
-+        background: rgba(15, 23, 42, 0.8);
-+        border: 1px solid rgba(148, 163, 184, 0.25);
-+        border-radius: 12px;
-+        padding: 0.85rem 1rem;
-+        color: var(--text-primary);
-+        font-size: 0.95rem;
-+        font-family: inherit;
-+      }
-+
-+      input:focus, textarea:focus {
-+        outline: none;
-+        border-color: rgba(34, 211, 238, 0.55);
-+        box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.12);
-+      }
-+
-+      textarea {
-+        min-height: 120px;
-+      }
-+
-+      .grid-two {
-+        display: grid;
-+        gap: 2rem;
-+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-+      }
-+
-+      .pill-list {
-+        display: flex;
-+        flex-wrap: wrap;
-+        gap: 0.6rem;
-+        margin-top: 1rem;
-+      }
-+
-+      .pill {
-+        padding: 0.5rem 0.9rem;
-+        border-radius: 999px;
-+        background: rgba(59, 130, 246, 0.18);
-+        color: var(--text-muted);
-+        font-size: 0.85rem;
-+        letter-spacing: 0.04em;
-+        text-transform: uppercase;
-+      }
-+
-+      @media (max-width: 720px) {
-+        nav {
-+          flex-direction: column;
-+          align-items: flex-start;
-+        }
-+
-+        .hero {
-+          margin-top: 2rem;
-+        }
-+
-+        footer {
-+          text-align: center;
-+        }
-+
-+        footer .container {
-+          display: grid;
-+          gap: 1.5rem;
-+          justify-items: center;
-+        }
-+
-+        .resource-item {
-+          flex-direction: column;
-+          text-align: center;
-+        }
-+      }
-+    </style>
-+  </head>
-+  <body>
-+    <header>
-+      <div class="container">
-+        <nav>
-+          <a class="brand" href="#top">
-+            <img src="assets/logo.svg" alt="What is Ransomware logo" />
-+            <span>
-+              <strong>WHAT IS RANSOMWARE</strong>
-+              <small>Cybersecurity Awareness Project</small>
-+            </span>
-+          </a>
-+          <div class="cta-group">
-+            <button class="btn btn-secondary" type="button" onclick="document.getElementById('playbook').scrollIntoView({behavior: 'smooth'})">
-+              Explore Playbook
-+            </button>
-+            <button class="btn btn-primary" type="button" onclick="document.getElementById('newsletter').scrollIntoView({behavior: 'smooth'})">
-+              Get Updates
-+            </button>
-+          </div>
-+        </nav>
-+      </div>
-+    </header>
-+
-+    <main id="top">
-+      <section class="container hero" aria-labelledby="hero-title">
-+        <div>
-+          <h1 id="hero-title">Understand, Prevent &amp; Respond to Modern Ransomware Attacks</h1>
-+          <p>
-+            What is Ransomware empowers individuals, small businesses, educators, and community leaders with the knowledge and tools to identify threats, strengthen defenses, and respond with confidence.
-+          </p>
-+          <div class="cta-group">
-+            <button class="btn btn-primary" type="button" onclick="document.getElementById('learning-hub').scrollIntoView({behavior: 'smooth'})">Start Learning</button>
-+            <button class="btn btn-secondary" type="button" onclick="document.getElementById('faq').scrollIntoView({behavior: 'smooth'})">Common Questions</button>
-+            <a class="btn btn-quiz" href="quiz.html">Take the Ransomware Quiz</a>
-+          </div>
-+        </div>
-+        <article class="hero-card" aria-labelledby="hero-card-title">
-+          <h2 id="hero-card-title">Threat Briefing</h2>
-+          <div class="insight-grid">
-+            <div class="insight">
-+              <strong>+95%</strong>
-+              <p>increase in ransomware attacks targeting public sector and education organizations in the last two years.</p>
-+            </div>
-+            <div class="insight">
-+              <strong>80%</strong>
-+              <p>of successful ransomware events start with a phishing email or social engineering tactic against employees.</p>
-+            </div>
-+            <div class="insight">
-+              <strong>23 Days</strong>
-+              <p>average downtime for organizations that do not have an incident response plan or tested backups in place.</p>
-+            </div>
-+          </div>
-+        </article>
-+      </section>
-+
-+      <section class="container" id="mission" aria-labelledby="mission-title">
-+        <div class="badge">Our mission</div>
-+        <h2 class="section-title" id="mission-title">Free, action-ready education for <span>every defender</span></h2>
-+        <div class="grid-two">
-+          <p>
-+            Ransomware criminals exploit gaps in awareness, human error, and unpatched systems. We make complex cybersecurity principles approachable so you can build a resilient defense strategy without needing a full-time security team.
-+          </p>
-+          <p>
-+            From understanding how attackers operate to practicing incident response, our modular learning paths and downloadable resources are designed for classrooms, boardrooms, and home offices alike.
-+          </p>
-+        </div>
-+        <div class="pill-list" role="list">
-+          <span class="pill" role="listitem">Individuals</span>
-+          <span class="pill" role="listitem">Small &amp; Medium Businesses</span>
-+          <span class="pill" role="listitem">IT &amp; Helpdesk Teams</span>
-+          <span class="pill" role="listitem">Educators</span>
-+          <span class="pill" role="listitem">Community Leaders</span>
-+        </div>
-+      </section>
-+
-+      <section class="container" id="attack-surface" aria-labelledby="attack-title">
-+        <h2 class="section-title" id="attack-title">How ransomware gangs <span>gain access</span></h2>
-+        <div class="content-grid">
-+          <article class="card">
-+            <h3>Phishing &amp; Social Engineering</h3>
-+            <p>Deceptive emails, texts, and voice calls trick users into sharing credentials or running malicious attachments. Spot warning signs like urgent tone, mismatched addresses, and suspicious links.</p>
-+          </article>
-+          <article class="card">
-+            <h3>Exposed Remote Services</h3>
-+            <p>Attackers brute force weak passwords or exploit vulnerabilities in VPNs, RDP, and remote management tools. Require multi-factor authentication and restrict access to known networks.</p>
-+          </article>
-+          <article class="card">
-+            <h3>Third-Party &amp; Supply Chain</h3>
-+            <p>Compromised vendors and software updates can be weaponized to deliver ransomware. Review vendor security posture, monitor updates, and limit third-party privileges.</p>
-+          </article>
-+          <article class="card">
-+            <h3>Unpatched Systems</h3>
-+            <p>Outdated operating systems, firmware, and security tools are easy targets. Schedule regular updates, automate patch deployment, and remove unsupported assets.</p>
-+          </article>
-+        </div>
-+      </section>
-+
-+      <section class="container" id="stats" aria-labelledby="stats-title">
-+        <h2 class="section-title" id="stats-title">Key risk signals to track</h2>
-+        <div class="stat-grid">
-+          <article class="stat-card">
-+            <strong>72%</strong>
-+            <p>of organizations with immutable backups recovered in less than a week.</p>
-+          </article>
-+          <article class="stat-card">
-+            <strong>43%</strong>
-+            <p>of attacks now include data extortion in addition to encryption.</p>
-+          </article>
-+          <article class="stat-card">
-+            <strong>4 hrs</strong>
-+            <p>Average time it takes for ransomware to begin encrypting once an attacker has foothold.</p>
-+          </article>
-+          <article class="stat-card">
-+            <strong>3x</strong>
-+            <p>increase in attacks against managed service providers and IT consultancies year-over-year.</p>
-+          </article>
-+        </div>
-+      </section>
-+
-+      <section class="container" id="playbook" aria-labelledby="playbook-title">
-+        <div class="badge">Incident response playbook</div>
-+        <h2 class="section-title" id="playbook-title">Respond with <span>precision</span> when minutes matter</h2>
-+        <div class="timeline" role="list">
-+          <article class="timeline-step card" role="listitem">
-+            <h4>1. Detect &amp; Contain</h4>
-+            <p>Isolate affected devices from the network, disable shared drives, and preserve evidence. Activate monitoring to spot lateral movement attempts.</p>
-+          </article>
-+          <article class="timeline-step card" role="listitem">
-+            <h4>2. Assess Impact</h4>
-+            <p>Document affected systems, data sensitivity, and business processes. Engage legal and compliance leads to evaluate reporting obligations.</p>
-+          </article>
-+          <article class="timeline-step card" role="listitem">
-+            <h4>3. Eradicate &amp; Recover</h4>
-+            <p>Remove malicious persistence, reset credentials, and restore clean backups. Validate system integrity before reconnecting to production networks.</p>
-+          </article>
-+          <article class="timeline-step card" role="listitem">
-+            <h4>4. Learn &amp; Improve</h4>
-+            <p>Conduct a blameless post-incident review, capture lessons learned, and strengthen controls, user training, and detection engineering.</p>
-+          </article>
-+        </div>
-+      </section>
-+
-+      <section class="container" id="learning-hub" aria-labelledby="learning-title">
-+        <div class="badge">Learning hub</div>
-+        <h2 class="section-title" id="learning-title">Build your <span>skills pathway</span></h2>
-+        <div class="content-grid">
-+          <article class="card">
-+            <h3>Foundations Track</h3>
-+            <p>Understand ransomware anatomy, attacker motivations, and defensive layers. Ideal for students, citizens, and business owners starting their security journey.</p>
-+          </article>
-+          <article class="card">
-+            <h3>Policy &amp; Leadership Track</h3>
-+            <p>Develop governance frameworks, risk assessments, and executive playbooks to guide strategic decision-making during high-pressure events.</p>
-+          </article>
-+          <article class="card">
-+            <h3>Technical Defense Track</h3>
-+            <p>Hands-on labs exploring endpoint hardening, SIEM alerts, zero trust segmentation, and backup validation to minimize attacker dwell time.</p>
-+          </article>
-+          <article class="card">
-+            <h3>Educator Toolkit</h3>
-+            <p>Lesson plans, slide decks, and classroom simulations that bring ransomware scenarios to life and encourage proactive security habits.</p>
-+          </article>
-+        </div>
-+      </section>
-+
-+      <section class="container" id="toolkit" aria-labelledby="toolkit-title">
-+        <div class="badge">Downloadable toolkit</div>
-+        <h2 class="section-title" id="toolkit-title">Templates &amp; checklists to <span>put knowledge into action</span></h2>
-+        <ul class="resource-list">
-+          <li class="resource-item">
-+            <span>1</span>
-+            <div>
-+              <h3>Ransomware Readiness Checklist</h3>
-+              <p>Use this monthly checklist to validate offline backups, update incident contacts, and ensure security awareness training is on schedule.</p>
-+            </div>
-+          </li>
-+          <li class="resource-item">
-+            <span>2</span>
-+            <div>
-+              <h3>Executive Brief Template</h3>
-+              <p>Communicate clearly with leadership using a concise brief that covers impact, response timeline, and resource requirements.</p>
-+            </div>
-+          </li>
-+          <li class="resource-item">
-+            <span>3</span>
-+            <div>
-+              <h3>Tabletop Exercise Guide</h3>
-+              <p>Run realistic tabletop drills with technical and non-technical stakeholders to test decision-making and coordination.</p>
-+            </div>
-+          </li>
-+        </ul>
-+      </section>
-+
-+      <section class="container" id="simulation" aria-labelledby="simulation-title">
-+        <div class="badge">Scenario spotlight</div>
-+        <h2 class="section-title" id="simulation-title">Walk through a <span>day-one ransomware scenario</span></h2>
-+        <div class="card">
-+          <h3>Interactive Response Drill</h3>
-+          <p>Follow a fictional organization facing a ransomware attack. Identify suspicious behaviors, choose response actions, and see how decisions change the outcome. Use it as a workshop or self-paced learning module.</p>
-+        </div>
-+      </section>
-+
-+      <section class="container" id="faq" aria-labelledby="faq-title">
-+        <div class="badge">FAQ</div>
-+        <h2 class="section-title" id="faq-title">Answers to your <span>most common questions</span></h2>
-+        <div class="faq">
-+          <details>
-+            <summary>Should we ever pay the ransom?</summary>
-+            <p>Paying ransom is risky and often discouraged by law enforcement. Even after payment, decryption tools may fail and attackers can still leak stolen data. Focus on prevention, backups, and legal consultation to make an informed decision.</p>
-+          </details>
-+          <details>
-+            <summary>How do we protect remote and hybrid workers?</summary>
-+            <p>Require multi-factor authentication, limit admin privileges, ensure VPN or zero trust network access, and deliver just-in-time phishing simulations tailored for remote teams.</p>
-+          </details>
-+          <details>
-+            <summary>What regulations apply after an incident?</summary>
-+            <p>Reporting obligations vary by region and industry. Engage legal counsel early to understand requirements such as GDPR, HIPAA, SEC disclosures, and state-specific breach notification laws.</p>
-+          </details>
-+          <details>
-+            <summary>How often should we test backups?</summary>
-+            <p>Test restoration quarterly at a minimum, with critical systems validated monthly. Include verification that backups are isolated, versioned, and encrypted.</p>
-+          </details>
-+        </div>
-+      </section>
-+
-+      <section class="container" id="newsletter" aria-labelledby="newsletter-title">
-+        <div class="badge">Stay informed</div>
-+        <h2 class="section-title" id="newsletter-title">Join our <span>ransomware resilience briefing</span></h2>
-+        <div class="grid-two">
-+          <p>
-+            Subscribe to monthly insights featuring emerging threat intelligence, defensive playbooks, and training events you can share with your network. We respect your inbox—no spam, only actionable knowledge.
-+          </p>
-+          <form>
-+            <div>
-+              <label for="email">Email address</label>
-+              <input id="email" type="email" name="email" placeholder="you@example.com" required />
-+            </div>
-+            <div>
-+              <label for="role">Your role</label>
-+              <input id="role" type="text" name="role" placeholder="Security Analyst, Teacher, Business Owner..." />
-+            </div>
-+            <button class="btn btn-primary" type="submit">Subscribe for updates</button>
-+          </form>
-+        </div>
-+      </section>
-+    </main>
-+
-+    <footer>
-+      <div class="container">
-+        <p>
-+          © <span id="year"></span> What is Ransomware — Cybersecurity Awareness Project. Built to educate and empower communities against cyber extortion.
-+        </p>
-+      </div>
-+    </footer>
-+
-+    <script>
-+      document.getElementById('year').textContent = new Date().getFullYear();
-+    </script>
-+  </body>
-+</html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>What is Ransomware — Cybersecurity Awareness Project</title>
+    <meta
+      name="description"
+      content="What is Ransomware is a free cybersecurity awareness project offering practical education, readiness tools, and response guidance for individuals and organizations."
+    />
+    <link rel="preload" href="assets/logo.svg" as="image" type="image/svg+xml" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg-dark: #0b1220;
+        --bg-muted: #111a2e;
+        --bg-panel: rgba(255, 255, 255, 0.06);
+        --accent-red: #f64a4a;
+        --accent-blue: #3b82f6;
+        --accent-cyan: #22d3ee;
+        --text-primary: #f9fafb;
+        --text-muted: #cbd5f5;
+        --shadow-lg: 0 30px 60px -25px rgba(0, 0, 0, 0.6);
+        --shadow-sm: 0 12px 25px -15px rgba(15, 23, 42, 0.8);
+        font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+
+      body {
+        background: radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.12), transparent 50%),
+          radial-gradient(circle at 80% 0%, rgba(59, 130, 246, 0.18), transparent 55%),
+          linear-gradient(135deg, var(--bg-dark), #030712);
+        color: var(--text-primary);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      header {
+        padding: 1.25rem 0;
+      }
+
+      .container {
+        width: min(1200px, 92vw);
+        margin: 0 auto;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .brand img {
+        width: 58px;
+        height: 58px;
+        filter: drop-shadow(0 18px 24px rgba(2, 12, 27, 0.6));
+      }
+
+      .brand span {
+        display: grid;
+      }
+
+      .brand strong {
+        font-size: 1.05rem;
+        letter-spacing: 0.1em;
+      }
+
+      .brand small {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        opacity: 0.75;
+      }
+
+      .cta-group {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        border: none;
+        border-radius: 999px;
+        padding: 0.85rem 1.6rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 0.95rem;
+        transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #2563eb, #7c3aed);
+        color: white;
+        box-shadow: 0 18px 38px -18px rgba(59, 130, 246, 0.8);
+      }
+
+      .btn-secondary {
+        background: rgba(15, 23, 42, 0.65);
+        color: var(--text-muted);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+      }
+
+      main {
+        display: grid;
+        gap: 6rem;
+        padding-bottom: 6rem;
+      }
+
+      section {
+        position: relative;
+      }
+
+      .hero {
+        margin-top: 3.5rem;
+        display: grid;
+        gap: 3rem;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        align-items: center;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.4rem, 3vw + 2rem, 3.75rem);
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        text-shadow: 0 18px 28px rgba(3, 7, 18, 0.8);
+      }
+
+      .hero p {
+        font-size: 1.05rem;
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+        max-width: 540px;
+      }
+
+      .hero-card {
+        background: linear-gradient(160deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.65));
+        border-radius: 26px;
+        padding: 2.5rem;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        backdrop-filter: blur(16px);
+      }
+
+      .hero-card h2 {
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        font-size: 0.85rem;
+        color: var(--accent-cyan);
+        margin-bottom: 1.25rem;
+      }
+
+      .insight-grid {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .insight {
+        padding: 1.5rem;
+        border-radius: 18px;
+        background: rgba(15, 23, 42, 0.55);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .insight strong {
+        font-size: 1.5rem;
+        color: var(--accent-cyan);
+      }
+
+      .section-title {
+        font-size: clamp(2rem, 2vw + 1.5rem, 2.6rem);
+        margin-bottom: 2rem;
+      }
+
+      .section-title span {
+        color: var(--accent-red);
+      }
+
+      .content-grid {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      }
+
+      .card {
+        background: rgba(11, 18, 32, 0.75);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 22px;
+        padding: 1.75rem;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.3s ease;
+        backdrop-filter: blur(12px);
+      }
+
+      .card:hover {
+        transform: translateY(-6px);
+      }
+
+      .card h3 {
+        margin-bottom: 0.75rem;
+        font-size: 1.25rem;
+      }
+
+      .card p {
+        color: var(--text-muted);
+        font-size: 0.98rem;
+      }
+
+      .stat-grid {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .stat-card {
+        background: rgba(15, 23, 42, 0.65);
+        border-radius: 20px;
+        padding: 1.75rem;
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .stat-card strong {
+        font-size: 2.2rem;
+        display: block;
+        margin-bottom: 0.35rem;
+        color: var(--accent-blue);
+      }
+
+      .timeline {
+        position: relative;
+        padding-left: 1.5rem;
+        display: grid;
+        gap: 1.75rem;
+      }
+
+      .timeline::before {
+        content: '';
+        position: absolute;
+        left: 8px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(180deg, rgba(59, 130, 246, 0.6), rgba(226, 232, 240, 0));
+      }
+
+      .timeline-step {
+        position: relative;
+        padding-left: 1.75rem;
+      }
+
+      .timeline-step::before {
+        content: '';
+        position: absolute;
+        left: -1.5rem;
+        top: 0.45rem;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid var(--accent-blue);
+        background: var(--bg-dark);
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+      }
+
+      .timeline-step h4 {
+        margin-bottom: 0.4rem;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.4rem 0.85rem;
+        border-radius: 999px;
+        background: rgba(59, 130, 246, 0.12);
+        color: var(--accent-cyan);
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.75rem;
+      }
+
+      .faq {
+        display: grid;
+        gap: 1rem;
+      }
+
+      details {
+        background: rgba(11, 18, 32, 0.7);
+        border-radius: 18px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        padding: 1.2rem 1.5rem;
+        transition: border 0.2s ease;
+      }
+
+      details[open] {
+        border-color: rgba(59, 130, 246, 0.5);
+      }
+
+      summary {
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      summary::after {
+        content: '+';
+        font-size: 1.3rem;
+        transition: transform 0.3s ease;
+      }
+
+      details[open] summary::after {
+        transform: rotate(45deg);
+      }
+
+      footer {
+        border-top: 1px solid rgba(148, 163, 184, 0.2);
+        padding: 3rem 0 4rem;
+        background: rgba(2, 6, 23, 0.7);
+      }
+
+      footer p {
+        color: rgba(226, 232, 240, 0.55);
+      }
+
+      .resource-list {
+        list-style: none;
+        display: grid;
+        gap: 1rem;
+        margin-top: 1.25rem;
+      }
+
+      .resource-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.1rem 1.3rem;
+        border-radius: 16px;
+        background: rgba(15, 23, 42, 0.55);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+      }
+
+      .resource-item span {
+        background: rgba(59, 130, 246, 0.18);
+        color: var(--accent-blue);
+        font-weight: 700;
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+      }
+
+      form {
+        display: grid;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      label {
+        font-size: 0.9rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      input, textarea {
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        border-radius: 12px;
+        padding: 0.85rem 1rem;
+        color: var(--text-primary);
+        font-size: 0.95rem;
+        font-family: inherit;
+      }
+
+      input:focus, textarea:focus {
+        outline: none;
+        border-color: rgba(34, 211, 238, 0.55);
+        box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.12);
+      }
+
+      textarea {
+        min-height: 120px;
+      }
+
+      .grid-two {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      }
+
+      .pill-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-top: 1rem;
+      }
+
+      .pill {
+        padding: 0.5rem 0.9rem;
+        border-radius: 999px;
+        background: rgba(59, 130, 246, 0.18);
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 720px) {
+        nav {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .hero {
+          margin-top: 2rem;
+        }
+
+        footer {
+          text-align: center;
+        }
+
+        footer .container {
+          display: grid;
+          gap: 1.5rem;
+          justify-items: center;
+        }
+
+        .resource-item {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <a class="brand" href="#top">
+            <img src="assets/logo.svg" alt="What is Ransomware logo" />
+            <span>
+              <strong>WHAT IS RANSOMWARE</strong>
+              <small>Cybersecurity Awareness Project</small>
+            </span>
+          </a>
+          <div class="cta-group">
+            <button class="btn btn-secondary" type="button" onclick="document.getElementById('playbook').scrollIntoView({behavior: 'smooth'})">
+              Explore Playbook
+            </button>
+            <button class="btn btn-primary" type="button" onclick="document.getElementById('newsletter').scrollIntoView({behavior: 'smooth'})">
+              Get Updates
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="container hero" aria-labelledby="hero-title">
+        <div>
+          <h1 id="hero-title">Understand, Prevent &amp; Respond to Modern Ransomware Attacks</h1>
+          <p>
+            What is Ransomware empowers individuals, small businesses, educators, and community leaders with the knowledge and tools to identify threats, strengthen defenses, and respond with confidence.
+          </p>
+          <div class="cta-group">
+            <button class="btn btn-primary" type="button" onclick="document.getElementById('learning-hub').scrollIntoView({behavior: 'smooth'})">Start Learning</button>
+            <button class="btn btn-secondary" type="button" onclick="document.getElementById('faq').scrollIntoView({behavior: 'smooth'})">Common Questions</button>
+          </div>
+        </div>
+        <article class="hero-card" aria-labelledby="hero-card-title">
+          <h2 id="hero-card-title">Threat Briefing</h2>
+          <div class="insight-grid">
+            <div class="insight">
+              <strong>+95%</strong>
+              <p>increase in ransomware attacks targeting public sector and education organizations in the last two years.</p>
+            </div>
+            <div class="insight">
+              <strong>80%</strong>
+              <p>of successful ransomware events start with a phishing email or social engineering tactic against employees.</p>
+            </div>
+            <div class="insight">
+              <strong>23 Days</strong>
+              <p>average downtime for organizations that do not have an incident response plan or tested backups in place.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="container" id="mission" aria-labelledby="mission-title">
+        <div class="badge">Our mission</div>
+        <h2 class="section-title" id="mission-title">Free, action-ready education for <span>every defender</span></h2>
+        <div class="grid-two">
+          <p>
+            Ransomware criminals exploit gaps in awareness, human error, and unpatched systems. We make complex cybersecurity principles approachable so you can build a resilient defense strategy without needing a full-time security team.
+          </p>
+          <p>
+            From understanding how attackers operate to practicing incident response, our modular learning paths and downloadable resources are designed for classrooms, boardrooms, and home offices alike.
+          </p>
+        </div>
+        <div class="pill-list" role="list">
+          <span class="pill" role="listitem">Individuals</span>
+          <span class="pill" role="listitem">Small &amp; Medium Businesses</span>
+          <span class="pill" role="listitem">IT &amp; Helpdesk Teams</span>
+          <span class="pill" role="listitem">Educators</span>
+          <span class="pill" role="listitem">Community Leaders</span>
+        </div>
+      </section>
+
+      <section class="container" id="attack-surface" aria-labelledby="attack-title">
+        <h2 class="section-title" id="attack-title">How ransomware gangs <span>gain access</span></h2>
+        <div class="content-grid">
+          <article class="card">
+            <h3>Phishing &amp; Social Engineering</h3>
+            <p>Deceptive emails, texts, and voice calls trick users into sharing credentials or running malicious attachments. Spot warning signs like urgent tone, mismatched addresses, and suspicious links.</p>
+          </article>
+          <article class="card">
+            <h3>Exposed Remote Services</h3>
+            <p>Attackers brute force weak passwords or exploit vulnerabilities in VPNs, RDP, and remote management tools. Require multi-factor authentication and restrict access to known networks.</p>
+          </article>
+          <article class="card">
+            <h3>Third-Party &amp; Supply Chain</h3>
+            <p>Compromised vendors and software updates can be weaponized to deliver ransomware. Review vendor security posture, monitor updates, and limit third-party privileges.</p>
+          </article>
+          <article class="card">
+            <h3>Unpatched Systems</h3>
+            <p>Outdated operating systems, firmware, and security tools are easy targets. Schedule regular updates, automate patch deployment, and remove unsupported assets.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="container" id="stats" aria-labelledby="stats-title">
+        <h2 class="section-title" id="stats-title">Key risk signals to track</h2>
+        <div class="stat-grid">
+          <article class="stat-card">
+            <strong>72%</strong>
+            <p>of organizations with immutable backups recovered in less than a week.</p>
+          </article>
+          <article class="stat-card">
+            <strong>43%</strong>
+            <p>of attacks now include data extortion in addition to encryption.</p>
+          </article>
+          <article class="stat-card">
+            <strong>4 hrs</strong>
+            <p>Average time it takes for ransomware to begin encrypting once an attacker has foothold.</p>
+          </article>
+          <article class="stat-card">
+            <strong>3x</strong>
+            <p>increase in attacks against managed service providers and IT consultancies year-over-year.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="container" id="playbook" aria-labelledby="playbook-title">
+        <div class="badge">Incident response playbook</div>
+        <h2 class="section-title" id="playbook-title">Respond with <span>precision</span> when minutes matter</h2>
+        <div class="timeline" role="list">
+          <article class="timeline-step card" role="listitem">
+            <h4>1. Detect &amp; Contain</h4>
+            <p>Isolate affected devices from the network, disable shared drives, and preserve evidence. Activate monitoring to spot lateral movement attempts.</p>
+          </article>
+          <article class="timeline-step card" role="listitem">
+            <h4>2. Assess Impact</h4>
+            <p>Document affected systems, data sensitivity, and business processes. Engage legal and compliance leads to evaluate reporting obligations.</p>
+          </article>
+          <article class="timeline-step card" role="listitem">
+            <h4>3. Eradicate &amp; Recover</h4>
+            <p>Remove malicious persistence, reset credentials, and restore clean backups. Validate system integrity before reconnecting to production networks.</p>
+          </article>
+          <article class="timeline-step card" role="listitem">
+            <h4>4. Learn &amp; Improve</h4>
+            <p>Conduct a blameless post-incident review, capture lessons learned, and strengthen controls, user training, and detection engineering.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="container" id="learning-hub" aria-labelledby="learning-title">
+        <div class="badge">Learning hub</div>
+        <h2 class="section-title" id="learning-title">Build your <span>skills pathway</span></h2>
+        <div class="content-grid">
+          <article class="card">
+            <h3>Foundations Track</h3>
+            <p>Understand ransomware anatomy, attacker motivations, and defensive layers. Ideal for students, citizens, and business owners starting their security journey.</p>
+          </article>
+          <article class="card">
+            <h3>Policy &amp; Leadership Track</h3>
+            <p>Develop governance frameworks, risk assessments, and executive playbooks to guide strategic decision-making during high-pressure events.</p>
+          </article>
+          <article class="card">
+            <h3>Technical Defense Track</h3>
+            <p>Hands-on labs exploring endpoint hardening, SIEM alerts, zero trust segmentation, and backup validation to minimize attacker dwell time.</p>
+          </article>
+          <article class="card">
+            <h3>Educator Toolkit</h3>
+            <p>Lesson plans, slide decks, and classroom simulations that bring ransomware scenarios to life and encourage proactive security habits.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="container" id="toolkit" aria-labelledby="toolkit-title">
+        <div class="badge">Downloadable toolkit</div>
+        <h2 class="section-title" id="toolkit-title">Templates &amp; checklists to <span>put knowledge into action</span></h2>
+        <ul class="resource-list">
+          <li class="resource-item">
+            <span>1</span>
+            <div>
+              <h3>Ransomware Readiness Checklist</h3>
+              <p>Use this monthly checklist to validate offline backups, update incident contacts, and ensure security awareness training is on schedule.</p>
+            </div>
+          </li>
+          <li class="resource-item">
+            <span>2</span>
+            <div>
+              <h3>Executive Brief Template</h3>
+              <p>Communicate clearly with leadership using a concise brief that covers impact, response timeline, and resource requirements.</p>
+            </div>
+          </li>
+          <li class="resource-item">
+            <span>3</span>
+            <div>
+              <h3>Tabletop Exercise Guide</h3>
+              <p>Run realistic tabletop drills with technical and non-technical stakeholders to test decision-making and coordination.</p>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="container" id="simulation" aria-labelledby="simulation-title">
+        <div class="badge">Scenario spotlight</div>
+        <h2 class="section-title" id="simulation-title">Walk through a <span>day-one ransomware scenario</span></h2>
+        <div class="card">
+          <h3>Interactive Response Drill</h3>
+          <p>Follow a fictional organization facing a ransomware attack. Identify suspicious behaviors, choose response actions, and see how decisions change the outcome. Use it as a workshop or self-paced learning module.</p>
+        </div>
+      </section>
+
+      <section class="container" id="faq" aria-labelledby="faq-title">
+        <div class="badge">FAQ</div>
+        <h2 class="section-title" id="faq-title">Answers to your <span>most common questions</span></h2>
+        <div class="faq">
+          <details>
+            <summary>Should we ever pay the ransom?</summary>
+            <p>Paying ransom is risky and often discouraged by law enforcement. Even after payment, decryption tools may fail and attackers can still leak stolen data. Focus on prevention, backups, and legal consultation to make an informed decision.</p>
+          </details>
+          <details>
+            <summary>How do we protect remote and hybrid workers?</summary>
+            <p>Require multi-factor authentication, limit admin privileges, ensure VPN or zero trust network access, and deliver just-in-time phishing simulations tailored for remote teams.</p>
+          </details>
+          <details>
+            <summary>What regulations apply after an incident?</summary>
+            <p>Reporting obligations vary by region and industry. Engage legal counsel early to understand requirements such as GDPR, HIPAA, SEC disclosures, and state-specific breach notification laws.</p>
+          </details>
+          <details>
+            <summary>How often should we test backups?</summary>
+            <p>Test restoration quarterly at a minimum, with critical systems validated monthly. Include verification that backups are isolated, versioned, and encrypted.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="container" id="newsletter" aria-labelledby="newsletter-title">
+        <div class="badge">Stay informed</div>
+        <h2 class="section-title" id="newsletter-title">Join our <span>ransomware resilience briefing</span></h2>
+        <div class="grid-two">
+          <p>
+            Subscribe to monthly insights featuring emerging threat intelligence, defensive playbooks, and training events you can share with your network. We respect your inbox—no spam, only actionable knowledge.
+          </p>
+          <form>
+            <div>
+              <label for="email">Email address</label>
+              <input id="email" type="email" name="email" placeholder="you@example.com" required />
+            </div>
+            <div>
+              <label for="role">Your role</label>
+              <input id="role" type="text" name="role" placeholder="Security Analyst, Teacher, Business Owner..." />
+            </div>
+            <button class="btn btn-primary" type="submit">Subscribe for updates</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>
+          © <span id="year"></span> What is Ransomware — Cybersecurity Awareness Project. Built to educate and empower communities against cyber extortion.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
