@@ -371,6 +371,22 @@
         color: rgba(254, 202, 202, 0.95);
       }
 
+      .hint {
+        margin-top: 0.6rem;
+        padding: 0.65rem 0.9rem;
+        border-radius: 12px;
+        background: rgba(59, 130, 246, 0.12);
+        color: rgba(191, 219, 254, 0.95);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        font-size: 0.92rem;
+        display: none;
+      }
+
+      .stage-card.has-error {
+        border-color: rgba(239, 68, 68, 0.45);
+        box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.2);
+      }
+
       .checkpoint-list {
         display: grid;
         gap: 0.75rem;
@@ -414,6 +430,42 @@
         padding: 0;
         margin: 0;
         color: rgba(165, 243, 252, 0.95);
+      }
+
+      .defeat-metric {
+        margin: 0 auto;
+        padding: 1rem 1.25rem;
+        border-radius: 18px;
+        background: rgba(15, 23, 42, 0.75);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        max-width: 520px;
+        display: grid;
+        gap: 0.4rem;
+        text-align: left;
+      }
+
+      .defeat-metric strong {
+        color: rgba(226, 232, 240, 0.95);
+      }
+
+      .defeat-metric[data-tier='low'] {
+        border-color: rgba(52, 211, 153, 0.45);
+        background: rgba(15, 118, 110, 0.18);
+      }
+
+      .defeat-metric[data-tier='moderate'] {
+        border-color: rgba(59, 130, 246, 0.45);
+        background: rgba(30, 64, 175, 0.18);
+      }
+
+      .defeat-metric[data-tier='high'] {
+        border-color: rgba(234, 179, 8, 0.55);
+        background: rgba(146, 64, 14, 0.18);
+      }
+
+      .defeat-metric[data-tier='critical'] {
+        border-color: rgba(239, 68, 68, 0.6);
+        background: rgba(127, 29, 29, 0.2);
       }
 
       footer {
@@ -521,6 +573,13 @@
         </section>
 
         <section id="celebration" class="celebration" hidden aria-live="polite">
+          <h2 id="celebration-title"></h2>
+          <p id="celebration-message"></p>
+          <div id="defeat-summary" class="defeat-metric" hidden>
+            <p><strong>Defeat probability:</strong> <span id="defeat-percent"></span></p>
+            <p id="defeat-tier"></p>
+            <p id="defeat-breakdown"></p>
+          </div>
           <h2>👏 Mission accomplished!</h2>
           <p id="celebration-message"></p>
           <ul id="celebration-list"></ul>
@@ -585,6 +644,11 @@
                 'Correct — the imaging server lateral movement, encrypted cabinets, and disabled defenses confirm an active campaign.',
               failure:
                 'One or more selections are off. Revisit the evidence and focus on clear indicators of compromise.',
+              hints: [
+                'Look for overnight activity that signals unauthorized access or data encryption in progress.',
+                'Disabled protections or renamed files are stronger clues than routine maintenance successes.',
+              ],
+              
             },
             {
               type: 'decision',
@@ -599,6 +663,11 @@
               answerIndex: 1,
               explanation:
                 'Segmenting the affected VLANs maintains core life-support equipment while halting lateral movement. An all-out shutdown or immediate payment would create patient risk and reward the attacker.',
+              hints: [
+                'Prioritize containment moves that keep lifesaving systems operating while stopping the spread.',
+                'Avoid strategies that either disrupt critical care entirely or reward the attackers.',
+              ],
+
             },
             {
               type: 'quiz',
@@ -614,6 +683,11 @@
                   answerIndex: 1,
                   explanation:
                     'Hospitals practice Code Rose/Code Grey announcements and structured paging trees to reach every unit in minutes. Email or ad-hoc texting is too slow and unreliable during care operations.',
+                  hints: [
+                    'Choose the method that rapidly reaches every clinical unit with rehearsed language.',
+                    'Think about hospital emergency codes and paging trees rather than ad-hoc texts or emails.',
+                  ],
+
                 },
                 {
                   prompt: 'Who must be briefed before reconnecting the EMR from backups?',
@@ -625,6 +699,11 @@
                   answerIndex: 1,
                   explanation:
                     'Restoration decisions affect care delivery, compliance reporting, and contractual obligations—multidisciplinary alignment is required.',
+                  hints: [
+                    'Consider all leaders whose approvals are needed before touching regulated patient data.',
+                    'Restoring the EMR impacts clinical care, compliance, and legal exposure at the same time.',
+                  ],
+
                 },
               ],
             },
@@ -709,6 +788,10 @@
                 'Great eye — the foreign RDP login, failed shadow copies, and unauthorized admin account confirm active compromise.',
               failure:
                 'Re-evaluate and focus on behaviors that deviate from expected maintenance or change plans.',
+              hints: [
+                'Zero in on off-hours access and system changes you did not authorize.',
+                'Failed backups or surprise admin accounts are stronger clues than routine updates.',
+              ],
             },
             {
               type: 'decision',
@@ -723,6 +806,10 @@
               answerIndex: 2,
               explanation:
                 'Manual invoicing and payroll backups keep cash moving while IT restores systems. A shutdown or bank pause would magnify impact and damage trust.',
+              hints: [
+                'Choose the path that keeps revenue and payroll moving without alarming stakeholders.',
+                'Avoid options that halt operations or make customers and employees panic.',
+              ],
             },
             {
               type: 'quiz',
@@ -738,6 +825,10 @@
                   answerIndex: 1,
                   explanation:
                     'Transparency about facts, next steps, and reporting channels builds confidence without overpromising.',
+                  hints: [
+                    'Employees want clear facts, current actions, and how to report issues.',
+                    'Speculation or big promises can backfire—stick to verified updates and guidance.',
+                  ],
                 },
                 {
                   prompt: 'How should you update top customers waiting on shipments?',
@@ -749,6 +840,10 @@
                   answerIndex: 1,
                   explanation:
                     'Proactive notice with timelines maintains trust. Silence fuels rumors and unusual payment requests erode credibility.',
+                  hints: [
+                    'Customers respond best to proactive, honest timelines when issues arise.',
+                    'Silence or unusual payment requests can damage trust faster than a short delay.',
+                  ],
                 },
               ],
             },
@@ -827,6 +922,10 @@
                 'Yes — the suspicious download, remote access request, and unofficial mod all open the door for ransomware.',
               failure:
                 'Recheck the list. Focus on risky downloads and access prompts, not normal maintenance.',
+              hints: [
+                'Start with downloads or prompts from people you do not recognize.',
+                'Untrusted mods and remote access pop-ups are classic warning signs of ransomware.',
+              ],
             },
             {
               type: 'decision',
@@ -841,6 +940,10 @@
               answerIndex: 0,
               explanation:
                 'Isolating devices and powering them down prevents further encryption and protects unaffected systems.',
+              hints: [
+                'Think about the fastest way to stop the malware from spreading any further.',
+                'Paying attackers or crowdsourcing help exposes you to more risk—focus on containment first.',
+              ],
             },
             {
               type: 'quiz',
@@ -856,6 +959,10 @@
                   answerIndex: 1,
                   explanation:
                     'Only trusted backups made before the attack are safe to restore. Anything from attackers or strangers may reinfect devices.',
+                  hints: [
+                    'Look for backups you controlled before the attack began.',
+                    'If the source is tied to attackers or strangers, it is too risky to trust.',
+                  ],
                 },
                 {
                   prompt: 'How do you protect financial accounts during the incident?',
@@ -867,6 +974,10 @@
                   answerIndex: 1,
                   explanation:
                     'Secure accounts from a clean device and add MFA so attackers cannot pivot into finances or identity theft.',
+                  hints: [
+                    'Secure your accounts from a device you know is clean.',
+                    'Adding multi-factor authentication keeps attackers out even if they stole a password.',
+                  ],
                 },
               ],
             },
@@ -917,6 +1028,13 @@
       const nextButton = document.getElementById('next-stage');
       const prevButton = document.getElementById('prev-stage');
       const restartButton = document.getElementById('restart');
+      const celebrationTitle = document.getElementById('celebration-title');
+      const celebrationMessage = document.getElementById('celebration-message');
+      const celebrationList = document.getElementById('celebration-list');
+      const defeatSummary = document.getElementById('defeat-summary');
+      const defeatPercentEl = document.getElementById('defeat-percent');
+      const defeatTierEl = document.getElementById('defeat-tier');
+      const defeatBreakdownEl = document.getElementById('defeat-breakdown');
       const celebrationMessage = document.getElementById('celebration-message');
       const celebrationList = document.getElementById('celebration-list');
       const tryAgainButton = document.getElementById('try-again');
@@ -924,7 +1042,40 @@
       const state = {
         scenarioKey: null,
         stageIndex: 0,
+        mistakes: 0,
+        totalChallenges: 0,
+        hintProgress: {},
       };
+
+      function computeTotalChallenges(scenario) {
+        return scenario.stages.reduce((total, stage) => {
+          if (stage.type === 'quiz') {
+            return total + stage.questions.length;
+          }
+          if (stage.type === 'decision' || stage.type === 'intel') {
+            return total + 1;
+          }
+          return total;
+        }, 0);
+      }
+
+      function getStageKey(suffix = '') {
+        return `${state.scenarioKey ?? 'none'}-${state.stageIndex}${suffix}`;
+      }
+
+      function revealHint(hints, key, container) {
+        if (!hints || hints.length === 0 || !container) return;
+        const used = state.hintProgress[key] || 0;
+        const index = Math.min(used, hints.length - 1);
+        container.textContent = `Hint: ${hints[index]}`;
+        container.style.display = 'block';
+        state.hintProgress[key] = used + 1;
+      }
+
+      function recordMistake({ hints, key, container, count = 1 }) {
+        state.mistakes += count;
+        revealHint(hints, key, container);
+      }
 
       function renderScenarioSelection() {
         selectionEl.innerHTML = '';
@@ -981,12 +1132,16 @@
         feedback.id = 'intel-feedback';
         feedback.className = 'feedback';
 
+        const hintBox = document.createElement('div');
+        hintBox.className = 'hint';
+
         const wrapper = document.createElement('div');
         wrapper.className = 'stage-card';
         wrapper.innerHTML = `<p class="callout">${stage.prompt}</p>`;
         wrapper.appendChild(form);
         wrapper.appendChild(submit);
         wrapper.appendChild(feedback);
+        wrapper.appendChild(hintBox);
         stageContent.appendChild(wrapper);
 
         form.addEventListener('submit', (event) => {
@@ -1009,6 +1164,11 @@
             feedback.textContent = stage.failure;
             feedback.classList.add('error');
             feedback.style.display = 'block';
+            recordMistake({
+              hints: stage.hints,
+              key: getStageKey(),
+              container: hintBox,
+            });
             lockStageProgress('Locked — revisit this stage');
           }
         });
@@ -1033,6 +1193,9 @@
 
         const feedback = document.createElement('div');
         feedback.className = 'feedback';
+        
+        const hintBox = document.createElement('div');
+        hintBox.className = 'hint';
 
         const wrapper = document.createElement('div');
         wrapper.className = 'stage-card';
@@ -1040,6 +1203,7 @@
         wrapper.appendChild(form);
         wrapper.appendChild(submit);
         wrapper.appendChild(feedback);
+        wrapper.appendChild(hintBox);
         stageContent.appendChild(wrapper);
 
         form.addEventListener('submit', (event) => {
@@ -1054,6 +1218,11 @@
             feedback.textContent = 'Not quite. Discuss as a team and choose the action that protects your mission goals.';
             feedback.classList.add('error');
             feedback.style.display = 'block';
+            recordMistake({
+              hints: stage.hints,
+              key: getStageKey(),
+              container: hintBox,
+            });
             lockStageProgress('Locked — choose the right response');
           }
         });
@@ -1062,6 +1231,10 @@
       function handleQuizStage(stage) {
         const form = document.createElement('form');
         form.className = 'quiz-block';
+        
+        const fieldsets = [];
+        const hintBoxes = [];
+
 
         stage.questions.forEach((question, qIndex) => {
           const fieldset = document.createElement('fieldset');
@@ -1078,6 +1251,12 @@
             fieldset.appendChild(label);
           });
 
+          const hintBox = document.createElement('div');
+          hintBox.className = 'hint';
+          fieldset.appendChild(hintBox);
+
+          fieldsets.push(fieldset);
+          hintBoxes.push(hintBox);
           form.appendChild(fieldset);
         });
 
@@ -1095,6 +1274,21 @@
 
         form.addEventListener('submit', (event) => {
           event.preventDefault();
+          const incorrectQuestions = [];
+
+          stage.questions.forEach((question, index) => {
+            const selected = form.querySelector(`input[name="quiz-${index}"]:checked`);
+            if (!selected || Number(selected.value) !== question.answerIndex) {
+              incorrectQuestions.push(index);
+              fieldsets[index].classList.add('has-error');
+              recordMistake({
+                hints: question.hints,
+                key: getStageKey(`-q${index}`),
+                container: hintBoxes[index],
+              });
+            } else {
+              fieldsets[index].classList.remove('has-error');
+            }
           const incorrectQuestions = stage.questions.filter((question, index) => {
             const selected = form.querySelector(`input[name="quiz-${index}"]:checked`);
             return !selected || Number(selected.value) !== question.answerIndex;
@@ -1255,6 +1449,19 @@
       function startScenario(key) {
         state.scenarioKey = key;
         state.stageIndex = 0;
+        state.mistakes = 0;
+        state.hintProgress = {};
+        state.totalChallenges = computeTotalChallenges(scenarios[key]);
+        stageView.hidden = false;
+        celebrationEl.hidden = true;
+        celebrationTitle.textContent = '';
+        celebrationMessage.textContent = '';
+        celebrationList.innerHTML = '';
+        defeatSummary.hidden = true;
+        defeatSummary.dataset.tier = '';
+        defeatPercentEl.textContent = '';
+        defeatTierEl.textContent = '';
+        defeatBreakdownEl.textContent = '';
         stageView.hidden = false;
         celebrationEl.hidden = true;
         selectionEl.setAttribute('hidden', '');
@@ -1265,6 +1472,7 @@
         const scenario = scenarios[state.scenarioKey];
         stageView.hidden = true;
         celebrationEl.hidden = false;
+        celebrationTitle.textContent = '👏 Mission accomplished!';
         celebrationMessage.textContent = scenario.celebration.message;
         celebrationList.innerHTML = '';
         scenario.celebration.highlights.forEach((highlight) => {
@@ -1272,6 +1480,38 @@
           li.textContent = `• ${highlight}`;
           celebrationList.appendChild(li);
         });
+
+        if (state.totalChallenges > 0) {
+          const defeatRatio = Math.min(1, state.mistakes / state.totalChallenges);
+          const defeatPercent = Math.round(defeatRatio * 100);
+          let tier = 'low';
+          let tierTitle = 'Low defeat risk';
+          let tierMessage = 'Your responses stayed sharp with only minimal course corrections.';
+
+          if (defeatPercent > 80) {
+            tier = 'critical';
+            tierTitle = 'Critical defeat risk';
+            tierMessage = 'Frequent missteps show a need for deeper practice before facing live attacks.';
+          } else if (defeatPercent > 50) {
+            tier = 'high';
+            tierTitle = 'High defeat risk';
+            tierMessage = 'Several pivots were required—tighten playbooks and drills to close the gaps.';
+          } else if (defeatPercent > 20) {
+            tier = 'moderate';
+            tierTitle = 'Moderate defeat risk';
+            tierMessage = 'Solid fundamentals, but there are still refinement opportunities to harden defenses.';
+          }
+
+          defeatSummary.hidden = false;
+          defeatSummary.dataset.tier = tier;
+          defeatPercentEl.textContent = `${defeatPercent}%`;
+          defeatTierEl.textContent = `${tierTitle} — ${tierMessage}`;
+          const adjustmentsLabel = state.mistakes === 1 ? 'adjustment' : 'adjustments';
+          const checkpointsLabel = state.totalChallenges === 1 ? 'checkpoint' : 'checkpoints';
+          defeatBreakdownEl.textContent = `${state.mistakes} ${adjustmentsLabel} across ${state.totalChallenges} challenge ${checkpointsLabel}.`;
+        } else {
+          defeatSummary.hidden = true;
+        }
       }
 
       selectionEl.addEventListener('click', (event) => {
@@ -1302,6 +1542,9 @@
       restartButton.addEventListener('click', () => {
         if (!state.scenarioKey) return;
         state.stageIndex = 0;
+        state.mistakes = 0;
+        state.hintProgress = {};
+        state.totalChallenges = computeTotalChallenges(scenarios[state.scenarioKey]);
         renderStage();
       });
 
@@ -1311,6 +1554,17 @@
         stageView.hidden = true;
         state.scenarioKey = null;
         state.stageIndex = 0;
+        state.mistakes = 0;
+        state.hintProgress = {};
+        state.totalChallenges = 0;
+        defeatSummary.hidden = true;
+        defeatSummary.dataset.tier = '';
+        celebrationTitle.textContent = '';
+        celebrationMessage.textContent = '';
+        celebrationList.innerHTML = '';
+        defeatPercentEl.textContent = '';
+        defeatTierEl.textContent = '';
+        defeatBreakdownEl.textContent = '';
       });
 
       document.getElementById('year').textContent = new Date().getFullYear();
