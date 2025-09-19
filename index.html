@@ -124,6 +124,12 @@
         box-shadow: 0 18px 38px -18px rgba(239, 68, 68, 0.8);
       }
 
+      .btn-drill {
+        background: linear-gradient(135deg, #10b981, #3b82f6);
+        color: white;
+        box-shadow: 0 18px 38px -18px rgba(16, 185, 129, 0.8);
+      }
+
       .btn:hover {
         transform: translateY(-3px);
       }
@@ -232,6 +238,13 @@
       .card p {
         color: var(--text-muted);
         font-size: 0.98rem;
+      }
+
+      .card ul {
+        margin: 0 0 1.25rem 1.4rem;
+        color: var(--text-muted);
+        display: grid;
+        gap: 0.55rem;
       }
 
       .stat-grid {
@@ -497,6 +510,7 @@
           <div class="cta-group">
             <button class="btn btn-primary" type="button" onclick="document.getElementById('learning-hub').scrollIntoView({behavior: 'smooth'})">Start Learning</button>
             <button class="btn btn-secondary" type="button" onclick="document.getElementById('faq').scrollIntoView({behavior: 'smooth'})">Common Questions</button>
+            <a class="btn btn-drill" href="drills.html">Run Interactive Drills</a>
             <a class="btn btn-quiz" href="quiz.html">Take the Ransomware Quiz</a>
           </div>
         </div>
@@ -661,6 +675,17 @@
         <div class="badge">Scenario spotlight</div>
         <h2 class="section-title" id="simulation-title">Walk through a <span>day-one ransomware scenario</span></h2>
         <div class="card">
+          <h3>Interactive Response Drills</h3>
+          <p>
+            Follow fictional organizations as they confront ransomware. Each drill locks progress behind investigations,
+            discussions, and checkpoints so teams cannot skip ahead—they earn the outcome together.
+          </p>
+          <ul>
+            <li>Hospitals: balance patient safety with containment inside an incident command structure.</li>
+            <li>Small businesses: protect payroll, keep customers informed, and coordinate with service providers.</li>
+            <li>Individuals: safeguard family devices, restore memories, and reinforce long-term habits.</li>
+          </ul>
+          <a class="btn btn-drill" href="drills.html">Launch the drills</a>
           <h3>Interactive Response Drill</h3>
           <p>Follow a fictional organization facing a ransomware attack. Identify suspicious behaviors, choose response actions, and see how decisions change the outcome. Use it as a workshop or self-paced learning module.</p>
         </div>
