@@ -1392,7 +1392,17 @@
 
         form.addEventListener('submit', (event) => {
           event.preventDefault();
-          const selected = Number(form.querySelector('input[name="decision"]:checked').value);
+          const selectedInput = form.querySelector('input[name="decision"]:checked');
+          if (!selectedInput) {
+            feedback.textContent = 'Please choose an option to continue.';
+            feedback.classList.add('error');
+            feedback.style.display = 'block';
+            if (typeof form.reportValidity === 'function') {
+              form.reportValidity();
+            }
+            return;
+          }
+          const selected = Number(selectedInput.value);
           if (selected === stage.answerIndex) {
             feedback.textContent = stage.explanation;
             feedback.classList.remove('error');
