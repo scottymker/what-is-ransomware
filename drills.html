@@ -249,6 +249,30 @@
         box-shadow: none;
       }
 
+      .btn-hint {
+        background: rgba(37, 99, 235, 0.18);
+        color: rgba(191, 219, 254, 0.95);
+        border: 1px solid rgba(59, 130, 246, 0.35);
+        box-shadow: none;
+      }
+
+      .btn-hint:hover:not(:disabled) {
+        background: rgba(37, 99, 235, 0.28);
+      }
+
+      .btn-hint:disabled {
+        opacity: 0.6;
+      }
+
+      .stage-form-actions,
+      .hint-actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-top: 0.6rem;
+      }
+
       .stage-shell {
         background: rgba(15, 23, 42, 0.85);
         border-radius: 24px;
@@ -1106,18 +1130,52 @@
       }
 
       function revealHint(hints, key, container) {
-        if (!hints || hints.length === 0 || !container) return;
+        if (!hints || hints.length === 0 || !container) {
+          return { revealed: false, exhausted: true };
+        }
+
         const used = state.hintProgress[key] || 0;
-        const index = Math.min(used, hints.length - 1);
-        container.innerHTML = `<strong>Hint ${index + 1}:</strong> ${hints[index]}`;
+        const total = hints.length;
+
+        if (used >= total) {
+          container.classList.add('is-visible');
+          container.setAttribute('data-hint-index', String(total));
+          container.innerHTML = `<strong>Hint ${total}:</strong> ${hints[total - 1]}`;
+          state.hintProgress[key] = total;
+          return { revealed: false, exhausted: true };
+        }
+
+        container.innerHTML = `<strong>Hint ${used + 1}:</strong> ${hints[used]}`;
         container.classList.add('is-visible');
-        container.setAttribute('data-hint-index', String(index + 1));
+        container.setAttribute('data-hint-index', String(used + 1));
         state.hintProgress[key] = used + 1;
+        return { revealed: true, exhausted: state.hintProgress[key] >= total };
       }
 
-      function recordMistake({ hints, key, container, count = 1 }) {
+      function refreshHintButton(button, hints, key) {
+        if (!button) return;
+        if (!hints || hints.length === 0) {
+          button.disabled = true;
+          button.textContent = 'No hints available';
+          return;
+        }
+
+        const used = Math.min(state.hintProgress[key] || 0, hints.length);
+        if (used >= hints.length) {
+          button.disabled = true;
+          button.textContent = 'All hints shown';
+        } else {
+          button.disabled = false;
+          button.textContent = used === 0 ? 'Get a hint' : 'Get another hint';
+        }
+      }
+
+      function recordMistake({ hints, key, container, count = 1, onHint }) {
         state.mistakes += count;
-        revealHint(hints, key, container);
+        const result = revealHint(hints, key, container);
+        if (typeof onHint === 'function') {
+          onHint(result);
+        }
       }
 
       function renderScenarioSelection() {
@@ -1176,6 +1234,7 @@
         const form = document.createElement('form');
         form.className = 'intel-options';
         form.setAttribute('aria-describedby', 'intel-feedback');
+        const stageKey = getStageKey();
 
         stage.options.forEach((option, index) => {
           const id = `intel-${state.stageIndex}-${index}`;
@@ -1199,11 +1258,40 @@
         hintBox.setAttribute('role', 'status');
         hintBox.setAttribute('aria-live', 'polite');
 
+        if (stage.hints && stage.hints.length > 0) {
+          const used = Math.min(state.hintProgress[stageKey] || 0, stage.hints.length);
+          if (used > 0) {
+            hintBox.innerHTML = `<strong>Hint ${used}:</strong> ${stage.hints[used - 1]}`;
+            hintBox.classList.add('is-visible');
+            hintBox.setAttribute('data-hint-index', String(used));
+          }
+        }
+
+        let updateHintState = () => {};
+
+        const actions = document.createElement('div');
+        actions.className = 'stage-form-actions';
+        actions.appendChild(submit);
+
+        if (stage.hints && stage.hints.length > 0) {
+          const hintButton = document.createElement('button');
+          hintButton.type = 'button';
+          hintButton.className = 'btn btn-hint';
+          hintButton.addEventListener('click', () => {
+            revealHint(stage.hints, stageKey, hintBox);
+            refreshHintButton(hintButton, stage.hints, stageKey);
+          });
+          actions.appendChild(hintButton);
+          updateHintState = () => refreshHintButton(hintButton, stage.hints, stageKey);
+          updateHintState();
+        }
+
         const wrapper = document.createElement('div');
         wrapper.className = 'stage-card';
         wrapper.innerHTML = `<p class="callout">${stage.prompt}</p>`;
         wrapper.appendChild(form);
-        wrapper.appendChild(submit);
+        form.appendChild(actions);
+
         wrapper.appendChild(feedback);
         wrapper.appendChild(hintBox);
         stageContent.appendChild(wrapper);
@@ -1230,8 +1318,9 @@
             feedback.style.display = 'block';
             recordMistake({
               hints: stage.hints,
-              key: getStageKey(),
+              key: stageKey,
               container: hintBox,
+              onHint: updateHintState,
             });
             lockStageProgress('Locked — revisit this stage');
           }
@@ -1241,6 +1330,7 @@
       function handleDecisionStage(stage) {
         const form = document.createElement('form');
         form.className = 'decision-options';
+        const stageKey = getStageKey();
 
         stage.options.forEach((option, index) => {
           const id = `decision-${state.stageIndex}-${index}`;
@@ -1263,11 +1353,39 @@
         hintBox.setAttribute('role', 'status');
         hintBox.setAttribute('aria-live', 'polite');
 
+        if (stage.hints && stage.hints.length > 0) {
+          const used = Math.min(state.hintProgress[stageKey] || 0, stage.hints.length);
+          if (used > 0) {
+            hintBox.innerHTML = `<strong>Hint ${used}:</strong> ${stage.hints[used - 1]}`;
+            hintBox.classList.add('is-visible');
+            hintBox.setAttribute('data-hint-index', String(used));
+          }
+        }
+
+        let updateHintState = () => {};
+
+        const actions = document.createElement('div');
+        actions.className = 'stage-form-actions';
+        actions.appendChild(submit);
+
+        if (stage.hints && stage.hints.length > 0) {
+          const hintButton = document.createElement('button');
+          hintButton.type = 'button';
+          hintButton.className = 'btn btn-hint';
+          hintButton.addEventListener('click', () => {
+            revealHint(stage.hints, stageKey, hintBox);
+            refreshHintButton(hintButton, stage.hints, stageKey);
+          });
+          actions.appendChild(hintButton);
+          updateHintState = () => refreshHintButton(hintButton, stage.hints, stageKey);
+          updateHintState();
+        }
+
         const wrapper = document.createElement('div');
         wrapper.className = 'stage-card';
         wrapper.innerHTML = `<p class="callout">${stage.question}</p>`;
         wrapper.appendChild(form);
-        wrapper.appendChild(submit);
+        form.appendChild(actions);
         wrapper.appendChild(feedback);
         wrapper.appendChild(hintBox);
         stageContent.appendChild(wrapper);
@@ -1286,8 +1404,9 @@
             feedback.style.display = 'block';
             recordMistake({
               hints: stage.hints,
-              key: getStageKey(),
+              key: stageKey,
               container: hintBox,
+              onHint: updateHintState,
             });
             lockStageProgress('Locked — choose the right response');
           }
@@ -1300,6 +1419,8 @@
 
         const fieldsets = [];
         const hintBoxes = [];
+        const hintUpdaters = [];
+        const questionKeys = [];
 
         stage.questions.forEach((question, qIndex) => {
           const fieldset = document.createElement('fieldset');
@@ -1320,10 +1441,42 @@
           hintBox.className = 'hint';
           hintBox.setAttribute('role', 'status');
           hintBox.setAttribute('aria-live', 'polite');
+
+          let updateHintState = () => {};
+          const questionKey = getStageKey(`-q${qIndex}`);
+          const totalHints = question.hints ? question.hints.length : 0;
+
+          if (totalHints > 0) {
+            const used = Math.min(state.hintProgress[questionKey] || 0, totalHints);
+            if (used > 0) {
+              hintBox.innerHTML = `<strong>Hint ${used}:</strong> ${question.hints[used - 1]}`;
+              hintBox.classList.add('is-visible');
+              hintBox.setAttribute('data-hint-index', String(used));
+            }
+          }
+
+          if (totalHints > 0) {
+            const actions = document.createElement('div');
+            actions.className = 'hint-actions';
+            const hintButton = document.createElement('button');
+            hintButton.type = 'button';
+            hintButton.className = 'btn btn-hint';
+            hintButton.addEventListener('click', () => {
+              revealHint(question.hints, questionKey, hintBox);
+              refreshHintButton(hintButton, question.hints, questionKey);
+            });
+            actions.appendChild(hintButton);
+            fieldset.appendChild(actions);
+            updateHintState = () => refreshHintButton(hintButton, question.hints, questionKey);
+            updateHintState();
+          }
+
           fieldset.appendChild(hintBox);
 
           fieldsets.push(fieldset);
           hintBoxes.push(hintBox);
+          hintUpdaters.push(updateHintState);
+          questionKeys.push(questionKey);
           form.appendChild(fieldset);
         });
 
@@ -1335,8 +1488,11 @@
         const feedback = document.createElement('div');
         feedback.className = 'feedback';
 
+        const submitWrapper = document.createElement('div');
+        submitWrapper.className = 'stage-form-actions';
+        submitWrapper.appendChild(submit);
+        form.appendChild(submitWrapper);
         stageContent.appendChild(form);
-        stageContent.appendChild(submit);
         stageContent.appendChild(feedback);
 
         form.addEventListener('submit', (event) => {
@@ -1350,8 +1506,9 @@
               fieldsets[index].classList.add('has-error');
               recordMistake({
                 hints: question.hints,
-                key: getStageKey(`-q${index}`),
+                key: questionKeys[index],
                 container: hintBoxes[index],
+                onHint: hintUpdaters[index],
               });
             } else {
               fieldsets[index].classList.remove('has-error');
@@ -1459,7 +1616,7 @@
         scenarioName.textContent = `${scenario.name} · ${scenario.duration}`;
         stageTitle.textContent = stage.title;
         stageCounter.textContent = `Stage ${state.stageIndex + 1} of ${scenario.stages.length}`;
-        progressBar.style.width = `${(state.stageIndex / scenario.stages.length) * 100}%`;
+        progressBar.style.width = `${((state.stageIndex) / scenario.stages.length) * 100}%`;
 
         stageContent.innerHTML = '';
         lockStageProgress();
