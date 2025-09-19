@@ -580,6 +580,8 @@
             <p id="defeat-tier"></p>
             <p id="defeat-breakdown"></p>
           </div>
+          <h2>👏 Mission accomplished!</h2>
+          <p id="celebration-message"></p>
           <ul id="celebration-list"></ul>
           <div class="stage-controls" style="justify-content: center">
             <button id="try-again" class="btn btn-accent" type="button">Run another drill</button>
@@ -646,6 +648,7 @@
                 'Look for overnight activity that signals unauthorized access or data encryption in progress.',
                 'Disabled protections or renamed files are stronger clues than routine maintenance successes.',
               ],
+              
             },
             {
               type: 'decision',
@@ -664,6 +667,7 @@
                 'Prioritize containment moves that keep lifesaving systems operating while stopping the spread.',
                 'Avoid strategies that either disrupt critical care entirely or reward the attackers.',
               ],
+
             },
             {
               type: 'quiz',
@@ -683,6 +687,7 @@
                     'Choose the method that rapidly reaches every clinical unit with rehearsed language.',
                     'Think about hospital emergency codes and paging trees rather than ad-hoc texts or emails.',
                   ],
+
                 },
                 {
                   prompt: 'Who must be briefed before reconnecting the EMR from backups?',
@@ -698,6 +703,7 @@
                     'Consider all leaders whose approvals are needed before touching regulated patient data.',
                     'Restoring the EMR impacts clinical care, compliance, and legal exposure at the same time.',
                   ],
+
                 },
               ],
             },
@@ -1029,6 +1035,8 @@
       const defeatPercentEl = document.getElementById('defeat-percent');
       const defeatTierEl = document.getElementById('defeat-tier');
       const defeatBreakdownEl = document.getElementById('defeat-breakdown');
+      const celebrationMessage = document.getElementById('celebration-message');
+      const celebrationList = document.getElementById('celebration-list');
       const tryAgainButton = document.getElementById('try-again');
 
       const state = {
@@ -1185,7 +1193,7 @@
 
         const feedback = document.createElement('div');
         feedback.className = 'feedback';
-
+        
         const hintBox = document.createElement('div');
         hintBox.className = 'hint';
 
@@ -1223,9 +1231,10 @@
       function handleQuizStage(stage) {
         const form = document.createElement('form');
         form.className = 'quiz-block';
-
+        
         const fieldsets = [];
         const hintBoxes = [];
+
 
         stage.questions.forEach((question, qIndex) => {
           const fieldset = document.createElement('fieldset');
@@ -1280,6 +1289,9 @@
             } else {
               fieldsets[index].classList.remove('has-error');
             }
+          const incorrectQuestions = stage.questions.filter((question, index) => {
+            const selected = form.querySelector(`input[name="quiz-${index}"]:checked`);
+            return !selected || Number(selected.value) !== question.answerIndex;
           });
 
           if (incorrectQuestions.length === 0) {
@@ -1450,6 +1462,8 @@
         defeatPercentEl.textContent = '';
         defeatTierEl.textContent = '';
         defeatBreakdownEl.textContent = '';
+        stageView.hidden = false;
+        celebrationEl.hidden = true;
         selectionEl.setAttribute('hidden', '');
         renderStage();
       }
