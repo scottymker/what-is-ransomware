@@ -1,0 +1,669 @@
+diff --git a//dev/null b/quiz.html
+index 0000000000000000000000000000000000000000..b5c695986911c21923d7aec3911cb37b9c9b7610 100644
+--- a//dev/null
++++ b/quiz.html
+@@ -0,0 +1,664 @@
++<!DOCTYPE html>
++<html lang="en">
++  <head>
++    <meta charset="UTF-8" />
++    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++    <title>Ransomware Readiness Quiz — What is Ransomware</title>
++    <meta
++      name="description"
++      content="Test your knowledge of ransomware threats, prevention, and response with this ten-question quiz from the What is Ransomware education project."
++    />
++    <link rel="preload" href="assets/logo.svg" as="image" type="image/svg+xml" />
++    <style>
++      :root {
++        color-scheme: light dark;
++        --bg-dark: #0b1220;
++        --bg-muted: #111a2e;
++        --bg-panel: rgba(255, 255, 255, 0.06);
++        --accent-red: #f64a4a;
++        --accent-blue: #3b82f6;
++        --accent-cyan: #22d3ee;
++        --text-primary: #f9fafb;
++        --text-muted: #cbd5f5;
++        --shadow-lg: 0 30px 60px -25px rgba(0, 0, 0, 0.6);
++        --shadow-sm: 0 12px 25px -15px rgba(15, 23, 42, 0.8);
++        font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
++      }
++
++      * {
++        box-sizing: border-box;
++        margin: 0;
++      }
++
++      body {
++        background: radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.12), transparent 50%),
++          radial-gradient(circle at 80% 0%, rgba(59, 130, 246, 0.18), transparent 55%),
++          linear-gradient(135deg, var(--bg-dark), #030712);
++        color: var(--text-primary);
++        min-height: 100vh;
++        line-height: 1.6;
++      }
++
++      header {
++        padding: 1.25rem 0;
++      }
++
++      .container {
++        width: min(1200px, 92vw);
++        margin: 0 auto;
++      }
++
++      nav {
++        display: flex;
++        justify-content: space-between;
++        align-items: center;
++        gap: 1rem;
++        flex-wrap: wrap;
++      }
++
++      .brand {
++        display: flex;
++        align-items: center;
++        gap: 0.75rem;
++        text-decoration: none;
++        color: inherit;
++      }
++
++      .brand img {
++        width: 58px;
++        height: 58px;
++        filter: drop-shadow(0 18px 24px rgba(2, 12, 27, 0.6));
++      }
++
++      .brand span {
++        display: grid;
++      }
++
++      .brand strong {
++        font-size: 1.05rem;
++        letter-spacing: 0.1em;
++      }
++
++      .brand small {
++        font-size: 0.75rem;
++        text-transform: uppercase;
++        opacity: 0.75;
++      }
++
++      .cta-group {
++        display: flex;
++        align-items: center;
++        gap: 0.75rem;
++        flex-wrap: wrap;
++      }
++
++      .btn {
++        border: none;
++        border-radius: 999px;
++        padding: 0.85rem 1.6rem;
++        font-weight: 600;
++        cursor: pointer;
++        display: inline-flex;
++        align-items: center;
++        gap: 0.6rem;
++        font-size: 0.95rem;
++        transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
++        text-decoration: none;
++      }
++
++      .btn-primary {
++        background: linear-gradient(135deg, #2563eb, #7c3aed);
++        color: white;
++        box-shadow: 0 18px 38px -18px rgba(59, 130, 246, 0.8);
++      }
++
++      .btn-secondary {
++        background: rgba(15, 23, 42, 0.65);
++        color: var(--text-muted);
++        border: 1px solid rgba(148, 163, 184, 0.25);
++      }
++
++      .btn-quiz {
++        background: linear-gradient(135deg, #f97316, #ef4444);
++        color: white;
++        box-shadow: 0 18px 38px -18px rgba(239, 68, 68, 0.8);
++      }
++
++      .btn:hover {
++        transform: translateY(-3px);
++      }
++
++      main {
++        display: grid;
++        gap: 4.5rem;
++        padding-bottom: 5rem;
++      }
++
++      .quiz-hero {
++        margin-top: 3.5rem;
++        display: grid;
++        gap: 2rem;
++        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
++        align-items: center;
++      }
++
++      .quiz-hero h1 {
++        font-size: clamp(2.2rem, 3vw + 1.8rem, 3.4rem);
++        line-height: 1.1;
++        margin-bottom: 1.25rem;
++        text-shadow: 0 18px 28px rgba(3, 7, 18, 0.8);
++      }
++
++      .quiz-hero p {
++        font-size: 1.05rem;
++        color: var(--text-muted);
++        max-width: 560px;
++      }
++
++      .quiz-highlight {
++        background: linear-gradient(160deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.7));
++        border-radius: 24px;
++        padding: 2.4rem;
++        border: 1px solid rgba(148, 163, 184, 0.22);
++        box-shadow: var(--shadow-lg);
++      }
++
++      .quiz-highlight ul {
++        display: grid;
++        gap: 0.85rem;
++        padding-left: 1.2rem;
++        color: var(--text-muted);
++      }
++
++      .quiz-section h2 {
++        font-size: clamp(2rem, 2vw + 1.6rem, 2.75rem);
++        margin-bottom: 1rem;
++      }
++
++      .quiz-section > p {
++        color: var(--text-muted);
++        margin-bottom: 2rem;
++      }
++
++      form {
++        display: grid;
++        gap: 2rem;
++      }
++
++      .quiz-grid {
++        display: grid;
++        gap: 1.75rem;
++      }
++
++      .quiz-card {
++        background: rgba(15, 23, 42, 0.75);
++        border-radius: 22px;
++        padding: 1.75rem;
++        border: 1px solid rgba(148, 163, 184, 0.16);
++        box-shadow: var(--shadow-sm);
++        transition: border 0.25s ease, transform 0.2s ease;
++      }
++
++      .quiz-card.is-correct {
++        border-color: rgba(34, 197, 94, 0.8);
++      }
++
++      .quiz-card.is-incorrect {
++        border-color: rgba(239, 68, 68, 0.85);
++      }
++
++      fieldset {
++        border: none;
++        padding: 0;
++        margin: 0;
++        display: grid;
++        gap: 1rem;
++      }
++
++      legend {
++        font-weight: 700;
++        font-size: 1.05rem;
++        margin-bottom: 0.5rem;
++      }
++
++      legend span {
++        display: inline-flex;
++        align-items: center;
++        justify-content: center;
++        width: 34px;
++        height: 34px;
++        border-radius: 999px;
++        background: rgba(59, 130, 246, 0.18);
++        color: var(--accent-blue);
++        font-size: 0.9rem;
++        margin-right: 0.65rem;
++      }
++
++      .option {
++        display: flex;
++        align-items: flex-start;
++        gap: 0.75rem;
++        background: rgba(11, 18, 32, 0.8);
++        padding: 0.9rem 1rem;
++        border-radius: 16px;
++        border: 1px solid transparent;
++        cursor: pointer;
++        transition: border 0.2s ease, background 0.2s ease;
++      }
++
++      .option:hover,
++      .option:focus-within {
++        border-color: rgba(59, 130, 246, 0.45);
++        background: rgba(17, 26, 46, 0.95);
++      }
++
++      .option input {
++        margin-top: 0.3rem;
++        accent-color: #3b82f6;
++      }
++
++      .option span {
++        color: var(--text-muted);
++      }
++
++      .feedback {
++        min-height: 1.25rem;
++        font-size: 0.95rem;
++        margin-top: 0.6rem;
++      }
++
++      .feedback.correct {
++        color: #34d399;
++      }
++
++      .feedback.incorrect {
++        color: #fca5a5;
++      }
++
++      .feedback.pending {
++        color: var(--text-muted);
++      }
++
++      .quiz-actions {
++        display: flex;
++        flex-wrap: wrap;
++        gap: 1rem;
++      }
++
++      #quiz-result {
++        font-size: 1.05rem;
++        color: var(--text-muted);
++      }
++
++      footer {
++        padding: 3rem 0 4rem;
++        text-align: center;
++        color: var(--text-muted);
++      }
++
++      @media (max-width: 720px) {
++        legend {
++          font-size: 1rem;
++        }
++
++        .quiz-card {
++          padding: 1.45rem;
++        }
++      }
++    </style>
++  </head>
++  <body>
++    <header>
++      <div class="container">
++        <nav>
++          <a class="brand" href="index.html">
++            <img src="assets/logo.svg" alt="What is Ransomware logo" />
++            <span>
++              <strong>WHAT IS RANSOMWARE</strong>
++              <small>Cybersecurity Awareness Project</small>
++            </span>
++          </a>
++          <div class="cta-group">
++            <a class="btn btn-secondary" href="index.html#learning-hub">Back to Learning Hub</a>
++            <a class="btn btn-quiz" href="#quiz">Start the Quiz</a>
++          </div>
++        </nav>
++      </div>
++    </header>
++
++    <main>
++      <section class="container quiz-hero">
++        <div>
++          <h1>Ransomware Readiness Quiz</h1>
++          <p>
++            Measure your knowledge of how ransomware operates, how to spot attacks, and which response steps matter most. Use the questions below to identify strengths and gaps, then revisit the learning hub for deeper practice.
++          </p>
++        </div>
++        <aside class="quiz-highlight">
++          <h2 style="margin-bottom: 1rem">How to use this quiz</h2>
++          <ul>
++            <li>Select the best answer for each question—there's only one correct choice.</li>
++            <li>Click <strong>Check my answers</strong> to see your score and explanations.</li>
++            <li>Look for the green and red highlights to spot strengths and areas to review.</li>
++          </ul>
++        </aside>
++      </section>
++
++      <section class="container quiz-section" id="quiz" aria-labelledby="quiz-heading">
++        <h2 id="quiz-heading">10 questions to test your ransomware response skills</h2>
++        <p>Answer every question to reveal your score. Aim for 8 or more correct responses to demonstrate strong readiness.</p>
++        <form id="quiz-form">
++          <div class="quiz-grid">
++            <article class="quiz-card" data-answer="b" data-explanation="Ransomware encrypts valuable data and demands payment for the decryption key, disrupting victims until they comply.">
++              <fieldset>
++                <legend><span>1</span>What is the primary objective of most ransomware attacks?</legend>
++                <label class="option">
++                  <input type="radio" name="question1" value="a" />
++                  <span>Steal hardware devices from the victim organization.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question1" value="b" />
++                  <span>Encrypt critical data and demand payment to restore access.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question1" value="c" />
++                  <span>Monitor network traffic to gather competitive intelligence.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question1" value="d" />
++                  <span>Install legitimate software updates across the environment.</span>
++                </label>
++              </fieldset>
++              <p class="feedback" aria-live="polite"></p>
++            </article>
++
++            <article class="quiz-card" data-answer="b" data-explanation="Phishing emails trick users into opening malicious attachments or links that deliver ransomware payloads.">
++              <fieldset>
++                <legend><span>2</span>Which action most commonly enables ransomware to enter a network?</legend>
++                <label class="option">
++                  <input type="radio" name="question2" value="a" />
++                  <span>Ignoring browser pop-up advertisements.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question2" value="b" />
++                  <span>Clicking on a malicious email attachment or link.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question2" value="c" />
++                  <span>Using multi-factor authentication on remote access tools.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question2" value="d" />
++                  <span>Viewing files in read-only mode.</span>
++                </label>
++              </fieldset>
++              <p class="feedback" aria-live="polite"></p>
++            </article>
++
++            <article class="quiz-card" data-answer="c" data-explanation="Offline or offsite backups remain out of reach for attackers, giving responders a clean copy for recovery.">
++              <fieldset>
++                <legend><span>3</span>Why are offline or offsite backups recommended in ransomware defense plans?</legend>
++                <label class="option">
++                  <input type="radio" name="question3" value="a" />
++                  <span>They make it easier for attackers to locate sensitive data.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question3" value="b" />
++                  <span>They allow employees to skip patching endpoints.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question3" value="c" />
++                  <span>They stay out of reach if attackers encrypt production systems.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question3" value="d" />
++                  <span>They automatically notify law enforcement when accessed.</span>
++                </label>
++              </fieldset>
++              <p class="feedback" aria-live="polite"></p>
++            </article>
++
++            <article class="quiz-card" data-answer="c" data-explanation="Disconnecting compromised hosts limits the ransomware's ability to spread before responders analyze the scope.">
++              <fieldset>
++                <legend><span>4</span>What should be the first response after confirming ransomware on a workstation?</legend>
++                <label class="option">
++                  <input type="radio" name="question4" value="a" />
++                  <span>Immediately power the computer off without telling anyone.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question4" value="b" />
++                  <span>Pay the ransom to restore operations as quickly as possible.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question4" value="c" />
++                  <span>Isolate the affected system from the network and report the incident.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question4" value="d" />
++                  <span>Delete suspicious files to clean up the machine.</span>
++                </label>
++              </fieldset>
++              <p class="feedback" aria-live="polite"></p>
++            </article>
++
++            <article class="quiz-card" data-answer="b" data-explanation="Suddenly renamed or unreadable files indicate encryption already started, a hallmark of ransomware.">
++              <fieldset>
++                <legend><span>5</span>Which warning sign suggests a ransomware attack is already underway?</legend>
++                <label class="option">
++                  <input type="radio" name="question5" value="a" />
++                  <span>Multi-factor authentication prompts appearing unexpectedly.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question5" value="b" />
++                  <span>Files gaining strange extensions and becoming unreadable.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question5" value="c" />
++                  <span>Internet connections speeding up dramatically.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question5" value="d" />
++                  <span>Security patches installing successfully overnight.</span>
++                </label>
++              </fieldset>
++              <p class="feedback" aria-live="polite"></p>
++            </article>
++
++            <article class="quiz-card" data-answer="c" data-explanation="Double extortion means attackers both encrypt and steal data so they can threaten public leaks if payment is refused.">
++              <fieldset>
++                <legend><span>6</span>What is meant by “double extortion” in modern ransomware campaigns?</legend>
++                <label class="option">
++                  <input type="radio" name="question6" value="a" />
++                  <span>Using two different encryption algorithms on the same files.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question6" value="b" />
++                  <span>Contacting victims by phone and email at the same time.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question6" value="c" />
++                  <span>Stealing data before encryption to threaten public exposure.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question6" value="d" />
++                  <span>Charging two separate ransom amounts for one attack.</span>
++                </label>
++              </fieldset>
++              <p class="feedback" aria-live="polite"></p>
++            </article>
++
++            <article class="quiz-card" data-answer="c" data-explanation="Limiting accounts to the minimum necessary privileges reduces the blast radius if credentials are compromised.">
++              <fieldset>
++                <legend><span>7</span>Which user access practice best reduces ransomware risk?</legend>
++                <label class="option">
++                  <input type="radio" name="question7" value="a" />
++                  <span>Reusing passwords across multiple business systems.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question7" value="b" />
++                  <span>Allowing all staff to install any software they choose.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question7" value="c" />
++                  <span>Enforcing least-privilege access for each role.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question7" value="d" />
++                  <span>Sharing administrative accounts to simplify support.</span>
++                </label>
++              </fieldset>
++              <p class="feedback" aria-live="polite"></p>
++            </article>
++
++            <article class="quiz-card" data-answer="b" data-explanation="Paying a ransom finances criminal operations and offers no guarantee that stolen or encrypted data will be restored.">
++              <fieldset>
++                <legend><span>8</span>Why do security agencies discourage paying a ransomware demand?</legend>
++                <label class="option">
++                  <input type="radio" name="question8" value="a" />
++                  <span>Payments are always refunded by the attacker after decryption.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question8" value="b" />
++                  <span>There is no assurance of recovery and it funds future attacks.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question8" value="c" />
++                  <span>Paying a ransom is illegal in every country.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question8" value="d" />
++                  <span>Attackers usually request payment in physical gift cards.</span>
++                </label>
++              </fieldset>
++              <p class="feedback" aria-live="polite"></p>
++            </article>
++
++            <article class="quiz-card" data-answer="d" data-explanation="Endpoint detection and response tools monitor systems continuously to spot suspicious behavior and trigger rapid containment.">
++              <fieldset>
++                <legend><span>9</span>Which technology helps security teams identify ransomware activity early?</legend>
++                <label class="option">
++                  <input type="radio" name="question9" value="a" />
++                  <span>Legacy on-premises file servers.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question9" value="b" />
++                  <span>Virtual private networks without authentication.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question9" value="c" />
++                  <span>Unsigned firmware updates on IoT devices.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question9" value="d" />
++                  <span>Endpoint detection and response (EDR) solutions.</span>
++                </label>
++              </fieldset>
++              <p class="feedback" aria-live="polite"></p>
++            </article>
++
++            <article class="quiz-card" data-answer="a" data-explanation="Tabletop exercises rehearse playbooks so leaders can practice decisions, communication, and coordination before an actual crisis.">
++              <fieldset>
++                <legend><span>10</span>How does a ransomware tabletop exercise help an organization?</legend>
++                <label class="option">
++                  <input type="radio" name="question10" value="a" />
++                  <span>It lets teams practice their roles and decisions before a real incident.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question10" value="b" />
++                  <span>It guarantees cyber insurance will cover any ransom payment.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question10" value="c" />
++                  <span>It replaces the need to maintain incident response plans.</span>
++                </label>
++                <label class="option">
++                  <input type="radio" name="question10" value="d" />
++                  <span>It eliminates the need for backups if everyone participates.</span>
++                </label>
++              </fieldset>
++              <p class="feedback" aria-live="polite"></p>
++            </article>
++          </div>
++
++          <div class="quiz-actions">
++            <button class="btn btn-primary" type="submit">Check my answers</button>
++            <button class="btn btn-secondary" type="reset">Reset quiz</button>
++          </div>
++          <div id="quiz-result" role="status" aria-live="polite"></div>
++        </form>
++      </section>
++    </main>
++
++    <footer>
++      <div class="container">
++        <p>Keep learning with playbooks, training materials, and community-ready resources at <a href="index.html#learning-hub" style="color: inherit; text-decoration: underline;">What is Ransomware</a>.</p>
++      </div>
++    </footer>
++
++    <script>
++      const quizForm = document.getElementById('quiz-form');
++      const quizResult = document.getElementById('quiz-result');
++      const quizCards = Array.from(document.querySelectorAll('.quiz-card'));
++
++      quizForm.addEventListener('submit', (event) => {
++        event.preventDefault();
++        let score = 0;
++        let answered = 0;
++
++        quizCards.forEach((card, index) => {
++          const name = `question${index + 1}`;
++          const selected = quizForm.querySelector(`input[name="${name}"]:checked`);
++          const feedback = card.querySelector('.feedback');
++          const explanation = card.dataset.explanation;
++
++          card.classList.remove('is-correct', 'is-incorrect');
++
++          if (!selected) {
++            feedback.textContent = 'Select an answer to receive feedback.';
++            feedback.className = 'feedback pending';
++            return;
++          }
++
++          answered += 1;
++
++          if (selected.value === card.dataset.answer) {
++            score += 1;
++            feedback.textContent = `Correct — ${explanation}`;
++            feedback.className = 'feedback correct';
++            card.classList.add('is-correct');
++          } else {
++            feedback.textContent = `Incorrect — ${explanation}`;
++            feedback.className = 'feedback incorrect';
++            card.classList.add('is-incorrect');
++          }
++        });
++
++        if (answered < quizCards.length) {
++          quizResult.textContent = `You have answered ${answered} of ${quizCards.length} questions. Complete every question to see your total score.`;
++          return;
++        }
++
++        const message =
++          score === quizCards.length
++            ? 'Outstanding incident readiness!'
++            : score >= 8
++            ? 'Great work—just a couple of areas to fine-tune.'
++            : score >= 5
++            ? 'Good start. Review the learning hub topics to strengthen your response plan.'
++            : 'Consider revisiting the foundational lessons to build confidence against ransomware.';
++
++        quizResult.textContent = `You scored ${score} out of ${quizCards.length}. ${message}`;
++      });
++
++      quizForm.addEventListener('reset', () => {
++        quizResult.textContent = '';
++        quizCards.forEach((card) => {
++          card.classList.remove('is-correct', 'is-incorrect');
++          const feedback = card.querySelector('.feedback');
++          feedback.textContent = '';
++          feedback.className = 'feedback';
++        });
++      });
++    </script>
++  </body>
++</html>
