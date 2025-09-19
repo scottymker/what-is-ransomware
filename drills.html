@@ -348,7 +348,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        flex-wrap:  wrap;
+        flex-wrap: wrap;
         gap: 1rem;
       }
 
@@ -381,6 +381,10 @@
         border: 1px solid rgba(59, 130, 246, 0.25);
         font-size: 0.92rem;
         display: none;
+      }
+
+      .hint.is-visible {
+        display: block;
       }
 
       .stage-card.has-error {
@@ -1105,8 +1109,9 @@
         if (!hints || hints.length === 0 || !container) return;
         const used = state.hintProgress[key] || 0;
         const index = Math.min(used, hints.length - 1);
-        container.textContent = `Hint: ${hints[index]}`;
-        container.style.display = 'block';
+        container.innerHTML = `<strong>Hint ${index + 1}:</strong> ${hints[index]}`;
+        container.classList.add('is-visible');
+        container.setAttribute('data-hint-index', String(index + 1));
         state.hintProgress[key] = used + 1;
       }
 
@@ -1191,6 +1196,8 @@
 
         const hintBox = document.createElement('div');
         hintBox.className = 'hint';
+        hintBox.setAttribute('role', 'status');
+        hintBox.setAttribute('aria-live', 'polite');
 
         const wrapper = document.createElement('div');
         wrapper.className = 'stage-card';
@@ -1253,6 +1260,8 @@
 
         const hintBox = document.createElement('div');
         hintBox.className = 'hint';
+        hintBox.setAttribute('role', 'status');
+        hintBox.setAttribute('aria-live', 'polite');
 
         const wrapper = document.createElement('div');
         wrapper.className = 'stage-card';
@@ -1309,6 +1318,8 @@
 
           const hintBox = document.createElement('div');
           hintBox.className = 'hint';
+          hintBox.setAttribute('role', 'status');
+          hintBox.setAttribute('aria-live', 'polite');
           fieldset.appendChild(hintBox);
 
           fieldsets.push(fieldset);
@@ -1448,7 +1459,7 @@
         scenarioName.textContent = `${scenario.name} · ${scenario.duration}`;
         stageTitle.textContent = stage.title;
         stageCounter.textContent = `Stage ${state.stageIndex + 1} of ${scenario.stages.length}`;
-        progressBar.style.width = `${((state.stageIndex) / scenario.stages.length) * 100}%`;
+        progressBar.style.width = `${(state.stageIndex / scenario.stages.length) * 100}%`;
 
         stageContent.innerHTML = '';
         lockStageProgress();
