@@ -1,0 +1,166 @@
+{
+  "intros": [
+    {
+      "id": "baseline",
+      "text": "Every quarter we surface a field-tested drill, a quick habit tune-up, and resources you can drop straight into staff briefings."
+    },
+    {
+      "id": "momentum",
+      "text": "Use this briefing to keep momentum between formal training days—pick the pieces that fit your team and hit send."
+    },
+    {
+      "id": "community",
+      "text": "Share the highlights with partners and families so everyone around you can spot, stop, and recover from ransomware attempts."
+    }
+  ],
+  "drills": [
+    {
+      "id": "hospital-blackout",
+      "title": "Hospital Blackout Command Drill",
+      "summary": "Simulate a regional hospital where a ransomware crew has disabled patient record access and imaging. Teams practice running an incident command center while clinicians revert to downtime procedures.",
+      "link": "https://what-is-ransomware.org/drills.html"
+    },
+    {
+      "id": "msp-containment",
+      "title": "Managed Service Provider Containment Sprint",
+      "summary": "Walk through the first 48 hours after a managed service provider discovers that remote monitoring software was weaponized. Participants triage clients, rotate credentials, and prioritize communications.",
+      "link": "https://what-is-ransomware.org/drills.html"
+    },
+    {
+      "id": "school-phishing",
+      "title": "School District Phishing Cascade",
+      "summary": "Explore how a single phished staff member leads to district-wide disruption. The drill guides technology leads, principals, and teachers through containment, family outreach, and class continuity decisions.",
+      "link": "https://what-is-ransomware.org/drills.html"
+    },
+    {
+      "id": "household-lockdown",
+      "title": "Household Device Lockdown Weekend",
+      "summary": "Families rehearse what happens when photo backups and shared devices are encrypted. The scenario emphasizes inventorying personal data, practicing offline restores, and discussing ransom demands together.",
+      "link": "https://what-is-ransomware.org/drills.html"
+    }
+  ],
+  "intel_briefs": [
+    {
+      "id": "rmm-abuse",
+      "headline": "Ransomware crews lean on remote monitoring tools",
+      "summary": "Threat responders continue to document attackers repurposing legitimate remote management agents that rarely trigger antivirus alerts.",
+      "action": "Audit which remote access tools are approved, revoke orphaned accounts, and log interactive sessions.",
+      "source": "Field observations aggregated by What is Ransomware"
+    },
+    {
+      "id": "extortion-multi",
+      "headline": "Multi-channel extortion is the default",
+      "summary": "Criminal groups now threaten data leaks, DDoS, and direct-to-customer harassment in the same campaign to force quick payment decisions.",
+      "action": "Update crisis communications templates so legal, PR, and support teams can coordinate rapid messaging across channels.",
+      "source": "Quarterly industry reporting snapshot"
+    },
+    {
+      "id": "education-targets",
+      "headline": "Education and local government remain high-value targets",
+      "summary": "Attackers time intrusions with testing periods, sporting events, or fiscal deadlines when downtime tolerance is low.",
+      "action": "Review your calendar for predictable pressure points and pre-stage response staffing around them.",
+      "source": "What is Ransomware monitoring feed"
+    },
+    {
+      "id": "backups-sabotage",
+      "headline": "Backups are getting sabotaged earlier",
+      "summary": "Incident reports highlight attackers hunting backup consoles during initial access to corrupt snapshots before encryption starts.",
+      "action": "Require MFA on backup tools, keep recent copies offline, and test a restore without production credentials.",
+      "source": "Partner community threat exchanges"
+    }
+  ],
+  "habits": [
+    {
+      "id": "credential-rotation",
+      "title": "Rotate shared admin credentials",
+      "summary": "If multiple people still depend on a single admin login, schedule a rotation window this month and migrate to named accounts with MFA.",
+      "steps": [
+        "Inventory accounts with shared passwords or generic names.",
+        "Create individual accounts with least-privilege roles.",
+        "Enforce multi-factor authentication before disabling the legacy login."
+      ]
+    },
+    {
+      "id": "restore-drill",
+      "title": "Test a full restore path",
+      "summary": "Pick one critical system and prove you can restore it from backups without touching production passwords or networks.",
+      "steps": [
+        "Choose a representative workload with business impact.",
+        "Restore to an isolated environment or spare hardware.",
+        "Document timing gaps and update runbooks while the test is fresh."
+      ]
+    },
+    {
+      "id": "phishing-reporting",
+      "title": "Sharpen phishing reporting feedback",
+      "summary": "Close the loop when people report suspicious messages. A fast thank-you note plus next steps keeps the habit alive.",
+      "steps": [
+        "Draft a short auto-reply template with validation and guidance.",
+        "Ensure reports land in a queue that analysts actually monitor.",
+        "Share sanitized examples during stand-up or staff meetings."
+      ]
+    },
+    {
+      "id": "tabletop-calendar",
+      "title": "Lock in the next tabletop",
+      "summary": "Do not wait for an incident to schedule the next cross-team rehearsal—book it now while calendars are flexible.",
+      "steps": [
+        "Poll core stakeholders for 60-minute blocks in the next quarter.",
+        "Assign a moderator and note-taker with clear roles.",
+        "Choose a scenario module from the drills page and tailor injects."        
+      ]
+    }
+  ],
+  "shareables": [
+    {
+      "id": "family-placemat",
+      "title": "Family cyber readiness placemat",
+      "summary": "Printable one-pager that walks households through updating devices, creating offline copies of memories, and spotting ransom demands.",
+      "link": "https://what-is-ransomware.org/assets/downloads/Ransomware%20Readiness%20Checklist%20-Individuals.pdf"
+    },
+    {
+      "id": "board-brief",
+      "title": "Executive board briefing outline",
+      "summary": "Slides and talking points to bring leadership up to speed on extortion trends without overwhelming jargon.",
+      "link": "https://what-is-ransomware.org/assets/downloads/Executive_Brief_Template_Hospital.docx"
+    },
+    {
+      "id": "classroom-kit",
+      "title": "Classroom awareness mini-lesson",
+      "summary": "Turn ransomware headlines into a 20-minute discussion using scenarios and quick response checklists.",
+      "link": "https://what-is-ransomware.org/assets/downloads/Ransomware%20Readiness%20Checklist%20-Small%20Business.pdf"
+    },
+    {
+      "id": "it-service-bulletin",
+      "title": "IT service desk ransomware bulletin",
+      "summary": "Copy-and-paste language for ticket notes, phone scripts, and status pages when an attack is suspected.",
+      "link": "https://what-is-ransomware.org/assets/downloads/Ransomware%20Readiness%20Checklist%20-Hospitals.pdf"
+    }
+  ],
+  "resource_spotlights": [
+    {
+      "id": "toolkit",
+      "title": "Complete ransomware readiness toolkit",
+      "summary": "Bundle of every checklist and worksheet so teams can download once and share internally.",
+      "link": "https://what-is-ransomware.org/assets/downloads/ransomware-toolkit.zip"
+    },
+    {
+      "id": "quiz",
+      "title": "Quarterly ransomware knowledge quiz",
+      "summary": "5-minute quiz to keep staff sharp on early warning signs and recovery steps.",
+      "link": "https://what-is-ransomware.org/quiz.html"
+    },
+    {
+      "id": "mission",
+      "title": "Mission briefing video script",
+      "summary": "Talking points you can adapt into a short video update or staff meeting intro.",
+      "link": "https://what-is-ransomware.org/index.html#mission"
+    },
+    {
+      "id": "faq",
+      "title": "Ransomware FAQ refresh",
+      "summary": "Answers to the top questions employees ask after headline-making incidents.",
+      "link": "https://what-is-ransomware.org/index.html#faq"
+    }
+  ]
+}
