@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cyber Extortion Safety for Teens — What is Ransomware</title>
+    <meta
+      name="description"
+      content="Learn how teens can recognize and respond to cyber extortion, sextortion, and online blackmail attempts on social media apps with interactive guides and real stories."
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/Logo.svg" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg-dark: #0b1220;
+        --bg-muted: #111a2e;
+        --bg-panel: rgba(255, 255, 255, 0.06);
+        --accent-red: #f64a4a;
+        --accent-blue: #3b82f6;
+        --accent-cyan: #22d3ee;
+        --accent-lime: #a3e635;
+        --text-primary: #f9fafb;
+        --text-muted: #cbd5f5;
+        --shadow-lg: 0 30px 60px -25px rgba(0, 0, 0, 0.6);
+        --shadow-sm: 0 12px 25px -15px rgba(15, 23, 42, 0.8);
+        font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+
+      body {
+        background: radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.12), transparent 50%),
+          radial-gradient(circle at 80% 0%, rgba(59, 130, 246, 0.18), transparent 55%),
+          linear-gradient(135deg, var(--bg-dark), #030712);
+        color: var(--text-primary);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      header {
+        padding: 1.25rem 0;
+      }
+
+      .container {
+        width: min(1100px, 92vw);
+        margin: 0 auto;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .brand img {
+        width: 52px;
+        height: 52px;
+        filter: drop-shadow(0 18px 24px rgba(2, 12, 27, 0.6));
+      }
+
+      .brand span {
+        display: grid;
+      }
+
+      .brand strong {
+        font-size: 1.05rem;
+        letter-spacing: 0.08em;
+      }
+
+      .brand small {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        opacity: 0.78;
+      }
+
+      .cta-group {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        border: none;
+        border-radius: 999px;
+        padding: 0.8rem 1.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 0.95rem;
+        transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #2563eb, #7c3aed);
+        color: white;
+        box-shadow: 0 18px 38px -18px rgba(59, 130, 246, 0.8);
+      }
+
+      .btn-secondary {
+        background: rgba(15, 23, 42, 0.65);
+        color: var(--text-muted);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+      }
+
+      .btn-pill {
+        background: rgba(148, 163, 184, 0.1);
+        color: var(--text-muted);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        font-size: 0.9rem;
+        padding: 0.65rem 1.25rem;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+      }
+
+      main {
+        display: grid;
+        gap: 5rem;
+        padding-bottom: 5.5rem;
+      }
+
+      section {
+        position: relative;
+      }
+
+      .hero {
+        margin-top: 3.5rem;
+        display: grid;
+        gap: 3rem;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        align-items: center;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.4rem, 3vw + 2rem, 3.6rem);
+        line-height: 1.1;
+        margin-bottom: 1.25rem;
+        text-shadow: 0 18px 28px rgba(3, 7, 18, 0.8);
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        max-width: 600px;
+      }
+
+      .hero-card {
+        background: linear-gradient(160deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.7));
+        border-radius: 26px;
+        padding: 2rem;
+        box-shadow: var(--shadow-lg);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-card::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top right, rgba(34, 211, 238, 0.24), transparent 55%);
+        opacity: 0.8;
+      }
+
+      .hero-card-content {
+        position: relative;
+        display: grid;
+        gap: 1rem;
+      }
+
+      .hero-card h2 {
+        font-size: 1.6rem;
+        line-height: 1.2;
+      }
+
+      .highlight-strip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: rgba(148, 163, 184, 0.12);
+        border-radius: 999px;
+        padding: 0.55rem 1.1rem;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      .grid {
+        display: grid;
+        gap: 2rem;
+      }
+
+      .two-column {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        align-items: start;
+      }
+
+      h2.section-title {
+        font-size: clamp(1.8rem, 2vw + 1.2rem, 2.4rem);
+        margin-bottom: 1rem;
+      }
+
+      p.lead {
+        font-size: 1.05rem;
+        color: var(--text-muted);
+        max-width: 680px;
+      }
+
+      .scenario-deck {
+        display: grid;
+        gap: 1.25rem;
+      }
+
+      .scenario-tabs {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .scenario-tabs button {
+        border: none;
+        border-radius: 18px;
+        padding: 0.7rem 1.1rem;
+        background: rgba(59, 130, 246, 0.15);
+        color: var(--text-primary);
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+
+      .scenario-tabs button[aria-pressed='true'] {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.95), rgba(124, 58, 237, 0.95));
+        box-shadow: 0 18px 32px -18px rgba(59, 130, 246, 0.9);
+      }
+
+      .scenario-tabs button:hover {
+        transform: translateY(-3px);
+      }
+
+      .scenario-card {
+        background: rgba(15, 23, 42, 0.85);
+        border-radius: 24px;
+        padding: 2rem;
+        border: 1px solid rgba(148, 163, 184, 0.14);
+        box-shadow: var(--shadow-sm);
+        display: grid;
+        gap: 1.1rem;
+      }
+
+      .scenario-card h3 {
+        font-size: 1.4rem;
+      }
+
+      .scenario-card ul {
+        display: grid;
+        gap: 0.6rem;
+        padding-left: 1.1rem;
+      }
+
+      .scenario-card ul li {
+        color: var(--text-muted);
+      }
+
+      .flag-grid {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .flag-card {
+        background: linear-gradient(160deg, rgba(124, 58, 237, 0.24), rgba(37, 99, 235, 0.18));
+        border-radius: 22px;
+        padding: 1.6rem;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .flag-card:hover {
+        transform: translateY(-4px);
+      }
+
+      .flag-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .flag-card p {
+        color: rgba(241, 245, 249, 0.88);
+        font-size: 0.98rem;
+      }
+
+      .flag-card p.revealed {
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+
+      .flag-card button {
+        position: absolute;
+        inset: 0;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        padding: 1.6rem;
+        color: inherit;
+        text-align: left;
+      }
+
+      .flag-card button span {
+        display: block;
+      }
+
+      .checklist {
+        background: rgba(15, 23, 42, 0.82);
+        border-radius: 26px;
+        padding: 2rem;
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        box-shadow: var(--shadow-lg);
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .progress-bar {
+        height: 12px;
+        border-radius: 999px;
+        background: rgba(148, 163, 184, 0.18);
+        overflow: hidden;
+      }
+
+      .progress-bar span {
+        display: block;
+        height: 100%;
+        width: 0%;
+        border-radius: inherit;
+        background: linear-gradient(135deg, rgba(34, 211, 238, 0.9), rgba(59, 130, 246, 0.85));
+        transition: width 0.4s ease;
+      }
+
+      .checklist ul {
+        list-style: none;
+        display: grid;
+        gap: 0.85rem;
+      }
+
+      .checklist label {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.8rem;
+        align-items: start;
+        cursor: pointer;
+      }
+
+      .checklist input[type='checkbox'] {
+        width: 22px;
+        height: 22px;
+        accent-color: #22d3ee;
+      }
+
+      .resources {
+        display: grid;
+        gap: 1.4rem;
+      }
+
+      .resource-card {
+        background: rgba(124, 58, 237, 0.16);
+        border-radius: 20px;
+        padding: 1.4rem;
+        border: 1px solid rgba(148, 163, 184, 0.12);
+      }
+
+      .resource-card strong {
+        font-size: 1.05rem;
+      }
+
+      footer {
+        padding: 3rem 0 2rem;
+        color: rgba(203, 213, 225, 0.8);
+        font-size: 0.9rem;
+        text-align: center;
+      }
+
+      footer a {
+        color: inherit;
+      }
+
+      @media (max-width: 640px) {
+        .hero-card {
+          padding: 1.6rem;
+        }
+
+        .scenario-card {
+          padding: 1.6rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <a class="brand" href="index.html">
+            <img src="assets/Logo.svg" alt="What is Ransomware logo" />
+            <span>
+              <strong>What is Ransomware</strong>
+              <small>Cyber safety project</small>
+            </span>
+          </a>
+          <div class="cta-group">
+            <a class="btn btn-pill" href="quiz.html">Take the quiz</a>
+            <a class="btn btn-pill" href="drills.html">Practice drills</a>
+            <a class="btn btn-primary" href="#help-now">Need help now?</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container grid two-column">
+          <div>
+            <div class="highlight-strip">Made for teens, by cyber safety educators</div>
+            <h1>Stay safe from cyber extortion on the apps you love</h1>
+            <p>
+              Online blackmail — sometimes called sextortion — happens when someone threatens to share photos, videos, or
+              private info unless you do what they want. This page shows you the red flags, shares real stories, and gives
+              you a plan that works even when you feel stressed.
+            </p>
+            <div class="cta-group" style="margin-top: 1.5rem">
+              <a class="btn btn-primary" href="#scenarios">Explore scenarios</a>
+              <a class="btn btn-secondary" href="#checklist">Build your safety plan</a>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="hero-card-content">
+              <h2>You are not alone.</h2>
+              <p>
+                Teens around the world are targeted every day on social media. The best defense is staying calm, asking for
+                help, and acting fast. Use this guide to practice what you will do and who you will call.
+              </p>
+              <ul style="display: grid; gap: 0.75rem; padding-left: 1.1rem;">
+                <li>🚫 No shame: extortion is always the criminal's fault.</li>
+                <li>📸 Delete nothing yet — keep the evidence.</li>
+                <li>📣 Tell a trusted adult or friend right away.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scenarios">
+        <div class="container grid" style="gap: 2.5rem;">
+          <div>
+            <h2 class="section-title">Interactive social app scenarios</h2>
+            <p class="lead">
+              Tap a situation card to see how cyber extortion can start on popular apps like Snapchat, Instagram, or gaming
+              chats. Each scenario gives you quick moves to stay in control.
+            </p>
+          </div>
+          <div class="scenario-deck">
+            <div class="scenario-tabs" role="tablist" aria-label="Cyber extortion scenarios">
+              <button type="button" role="tab" aria-selected="true" aria-pressed="true" data-scenario="snap">
+                <span>👻</span>
+                <span>Snap DM threat</span>
+              </button>
+              <button type="button" role="tab" aria-selected="false" aria-pressed="false" data-scenario="group">
+                <span>💬</span>
+                <span>Group chat dares</span>
+              </button>
+              <button type="button" role="tab" aria-selected="false" aria-pressed="false" data-scenario="game">
+                <span>🎮</span>
+                <span>Gaming streamer</span>
+              </button>
+              <button type="button" role="tab" aria-selected="false" aria-pressed="false" data-scenario="fake">
+                <span>✨</span>
+                <span>Fake creator collab</span>
+              </button>
+            </div>
+            <article class="scenario-card" aria-live="polite">
+              <h3 id="scenario-title">Snap DM threat</h3>
+              <p id="scenario-body" class="lead" style="font-size: 1.02rem;">
+                Someone you just met sends a flirty Snap and convinces you to share one back. Minutes later they demand
+                money and threaten to leak the screenshot to your friends list.
+              </p>
+              <ul id="scenario-actions">
+                <li>Screenshot and block the account — keep proof for adults and the police.</li>
+                <li>Do not pay. Paying keeps the threats coming.</li>
+                <li>Use Snapchat's in-app report with "Threatening to share private info."</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container grid two-column" style="gap: 2.5rem; align-items: center;">
+          <div>
+            <h2 class="section-title">Spot the red flags fast</h2>
+            <p class="lead">
+              These are common pressure tactics extortionists use. Tap each card to reveal the full warning sign and what it
+              really means.
+            </p>
+          </div>
+          <div class="flag-grid" role="list">
+            <div class="flag-card" role="listitem">
+              <button type="button" data-reveal>
+                <span>
+                  <h3>"Only we can know" energy</h3>
+                  <p>Tap to reveal why this matters.</p>
+                </span>
+              </button>
+            </div>
+            <div class="flag-card" role="listitem">
+              <button type="button" data-reveal>
+                <span>
+                  <h3>24/7 message bursts</h3>
+                  <p>Tap to reveal why this matters.</p>
+                </span>
+              </button>
+            </div>
+            <div class="flag-card" role="listitem">
+              <button type="button" data-reveal>
+                <span>
+                  <h3>Payment gift card demands</h3>
+                  <p>Tap to reveal why this matters.</p>
+                </span>
+              </button>
+            </div>
+            <div class="flag-card" role="listitem">
+              <button type="button" data-reveal>
+                <span>
+                  <h3>"I'll post in 5 minutes" countdowns</h3>
+                  <p>Tap to reveal why this matters.</p>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container grid two-column" style="gap: 3rem; align-items: start;">
+          <div>
+            <h2 class="section-title">Real stories, real outcomes</h2>
+            <p class="lead">
+              These are real situations reported by youth cyber tip lines. Swipe through to see what happened and how support
+              teams helped.
+            </p>
+            <div class="highlight-strip" style="margin-top: 1rem;">No graphic details. Names changed for privacy.</div>
+          </div>
+          <div class="scenario-card" style="gap: 1.4rem;">
+            <div class="scenario-tabs" role="tablist" aria-label="Real story cards">
+              <button type="button" role="tab" aria-selected="true" aria-pressed="true" data-story="aria">
+                <span>Aria, 15</span>
+              </button>
+              <button type="button" role="tab" aria-selected="false" aria-pressed="false" data-story="mason">
+                <span>Mason, 16</span>
+              </button>
+              <button type="button" role="tab" aria-selected="false" aria-pressed="false" data-story="lina">
+                <span>Lina, 13</span>
+              </button>
+            </div>
+            <div id="story-panel" style="display: grid; gap: 0.85rem;">
+              <p id="story-summary" class="lead" style="font-size: 1.01rem;">
+                Aria got a DM from a "modeling scout" asking for exclusive photos. When she hesitated, the scout threatened to
+                email her school. She blocked the account, saved screenshots, and reported it with her school counselor. The
+                police traced it to a repeat offender.
+              </p>
+              <div style="display: grid; gap: 0.6rem;">
+                <strong id="story-action">What helped:</strong>
+                <ul id="story-lessons" style="padding-left: 1.1rem; display: grid; gap: 0.5rem;">
+                  <li>Aria didn't pay or delete the messages.</li>
+                  <li>She asked a trusted adult for help fast.</li>
+                  <li>The counselor reported it to the CyberTipline.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="checklist">
+        <div class="container grid two-column" style="gap: 2.5rem; align-items: start;">
+          <div>
+            <h2 class="section-title">Build your safety plan</h2>
+            <p class="lead">
+              Check off each step as you plan what to do. When you're done, screenshot it or share it with someone you trust
+              so you can follow it if something happens.
+            </p>
+          </div>
+          <div class="checklist">
+            <div>
+              <strong>Progress</strong>
+              <div class="progress-bar" aria-hidden="true"><span id="progress-indicator"></span></div>
+              <p id="progress-text" style="color: var(--text-muted); font-size: 0.95rem;">0 of 6 actions ready</p>
+            </div>
+            <ul>
+              <li>
+                <label>
+                  <input type="checkbox" value="Talk to a trusted adult" />
+                  <span>Write down the adult you will contact first (family member, coach, teacher).</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="Backup evidence" />
+                  <span>Remember to take screenshots, save usernames, and keep the chat logs.</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="Stop contact" />
+                  <span>Block or mute the person so they cannot keep messaging you.</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="Report in-app" />
+                  <span>Find the report abuse option in your favorite apps right now.</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="Call in help" />
+                  <span>Know the hotline number or website for your country (see below).</span>
+                </label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" value="Self-care" />
+                  <span>Plan how you will calm down: music, breathing app, messaging a supportive friend.</span>
+                </label>
+              </li>
+            </ul>
+            <button class="btn btn-secondary" type="button" id="reset-plan">Reset my plan</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="help-now">
+        <div class="container grid two-column" style="gap: 2.5rem; align-items: start;">
+          <div>
+            <h2 class="section-title">Who can help right now?</h2>
+            <p class="lead">
+              You deserve support. These hotlines and resources know how to respond to cyber extortion and sextortion. Reach
+              out even if you're not sure — they handle questions every day.
+            </p>
+          </div>
+          <div class="resources">
+            <div class="resource-card">
+              <strong>U.S. & Canada — CyberTipline</strong>
+              <p>Visit <a href="https://report.cybertip.org/" target="_blank" rel="noopener">report.cybertip.org</a> or call 1-800-843-5678.</p>
+            </div>
+            <div class="resource-card">
+              <strong>UK — CEOP Safety Centre</strong>
+              <p>Report at <a href="https://www.ceop.police.uk/" target="_blank" rel="noopener">ceop.police.uk</a> for fast law enforcement help.</p>
+            </div>
+            <div class="resource-card">
+              <strong>Global Support</strong>
+              <p>
+                Find your country's helpline at <a href="https://www.insafehelpline.org/helplines" target="_blank" rel="noopener">Insafe Helplines</a> or
+                contact your local police emergency line.
+              </p>
+            </div>
+            <div class="resource-card">
+              <strong>Mental Health First Aid</strong>
+              <p>
+                Text a crisis counselor: U.S. & Canada text <strong>HOME</strong> to <strong>741741</strong>. UK text <strong>SHOUT</strong> to <strong>85258</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        Need legal advice or emergency help? Contact local law enforcement immediately.
+      </div>
+    </footer>
+
+    <script>
+      const scenarios = {
+        snap: {
+          title: 'Snap DM threat',
+          body:
+            'Someone you just met sends a flirty Snap and convinces you to share one back. Minutes later they demand money and threaten to leak the screenshot to your friends list.',
+          actions: [
+            'Screenshot and block the account — keep proof for adults and the police.',
+            'Do not pay. Paying keeps the threats coming.',
+            "Use Snapchat's in-app report with \"Threatening to share private info.\"",
+          ],
+        },
+        group: {
+          title: 'Group chat dares',
+          body:
+            'A new group chat dares you to share something embarrassing, promising it will stay private. The organizer threatens to tag everyone unless you send more.',
+          actions: [
+            'Leave the chat and set messages to disappear for everyone if the app allows.',
+            'Tell friends in the chat to report the organizer so the account is suspended.',
+            'Share the screenshots with a trusted adult to plan the next steps.',
+          ],
+        },
+        game: {
+          title: 'Gaming streamer',
+          body:
+            'A popular streamer offers free game coins if you send a “verification photo.” After you send it, they demand you keep sending more or they will leak your gamer tag and clips.',
+          actions: [
+            'Stop sending images immediately. Save the chat and gamer tag.',
+            'Report the player through the game platform and the streaming site.',
+            'Change your gamertag privacy settings and tell your squad what happened.',
+          ],
+        },
+        fake: {
+          title: 'Fake creator collab',
+          body:
+            'An account pretending to be a creator offers a collab and asks for a “test video.” After you send it, they say they will expose you unless you pay through cash apps.',
+          actions: [
+            'Search the real creator’s official account to confirm it is a fake.',
+            'Collect links, usernames, and payment requests as evidence.',
+            'Report the fraud to the platform and talk with someone you trust before responding.',
+          ],
+        },
+      };
+
+      const stories = {
+        aria: {
+          summary:
+            'Aria got a DM from a "modeling scout" asking for exclusive photos. When she hesitated, the scout threatened to email her school. She blocked the account, saved screenshots, and reported it with her school counselor. The police traced it to a repeat offender.',
+          lessons: [
+            "Aria didn't pay or delete the messages.",
+            'She asked a trusted adult for help fast.',
+            'The counselor reported it to the CyberTipline.',
+          ],
+        },
+        mason: {
+          summary:
+            'Mason met a player on Discord who convinced him to share a private clip. When the player demanded money, Mason used Discord’s report feature and told his older brother. They paused Mason’s accounts and filed a police report. The platform removed the account within hours.',
+          lessons: [
+            'Mason had screenshots and screen recordings ready.',
+            'He involved family immediately so he was not alone.',
+            'Reporting through the platform sped up the removal.',
+          ],
+        },
+        lina: {
+          summary:
+            'Lina’s classmate saved a disappearing photo and started asking for more. Lina told a school counselor who helped her explain the situation to her parents. Together they contacted the school resource officer who addressed the classmate’s behavior.',
+          lessons: [
+            'Lina trusted her instincts and said no to more requests.',
+            'She got in-person support before things escalated online.',
+            'Adults helped document everything for the school.',
+          ],
+        },
+      };
+
+      const scenarioTabButtons = document.querySelectorAll('.scenario-tabs button[data-scenario]');
+      const scenarioTitle = document.getElementById('scenario-title');
+      const scenarioBody = document.getElementById('scenario-body');
+      const scenarioActions = document.getElementById('scenario-actions');
+
+      scenarioTabButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const key = button.dataset.scenario;
+          const content = scenarios[key];
+          if (!content) return;
+
+          scenarioTabButtons.forEach((btn) => {
+            btn.setAttribute('aria-pressed', 'false');
+            btn.setAttribute('aria-selected', 'false');
+          });
+
+          button.setAttribute('aria-pressed', 'true');
+          button.setAttribute('aria-selected', 'true');
+
+          scenarioTitle.textContent = content.title;
+          scenarioBody.textContent = content.body;
+          scenarioActions.innerHTML = content.actions.map((step) => `<li>${step}</li>`).join('');
+        });
+      });
+
+      const flagCards = document.querySelectorAll('.flag-card');
+      const flagMessages = [
+        'Secrecy is a control tactic. Safe relationships never demand you hide everything from friends or family.',
+        'Spammers flood messages to wear you down. Slow down — time limits are fake.',
+        'Gift cards and crypto are untraceable. Real companies and friends do not demand payment that way.',
+        'Countdowns are meant to scare you. Every minute you wait to respond is more proof against them — do not give in.',
+      ];
+
+      flagCards.forEach((card, index) => {
+        const button = card.querySelector('button[data-reveal]');
+        if (!button) return;
+        button.addEventListener('click', () => {
+          const message = flagMessages[index];
+          const textElement = card.querySelector('p');
+          if (textElement) {
+            textElement.textContent = message;
+            textElement.classList.add('revealed');
+          }
+          button.setAttribute('disabled', 'true');
+        });
+      });
+
+      const storyButtons = document.querySelectorAll('.scenario-tabs button[data-story]');
+      const storySummary = document.getElementById('story-summary');
+      const storyLessons = document.getElementById('story-lessons');
+
+      storyButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const key = button.dataset.story;
+          const story = stories[key];
+          if (!story) return;
+
+          storyButtons.forEach((btn) => {
+            btn.setAttribute('aria-pressed', 'false');
+            btn.setAttribute('aria-selected', 'false');
+          });
+
+          button.setAttribute('aria-pressed', 'true');
+          button.setAttribute('aria-selected', 'true');
+
+          storySummary.textContent = story.summary;
+          storyLessons.innerHTML = story.lessons.map((lesson) => `<li>${lesson}</li>`).join('');
+        });
+      });
+
+      const checklist = document.querySelectorAll('.checklist input[type="checkbox"]');
+      const progressIndicator = document.getElementById('progress-indicator');
+      const progressText = document.getElementById('progress-text');
+      const resetPlanButton = document.getElementById('reset-plan');
+
+      function updateProgress() {
+        const total = checklist.length;
+        const completed = Array.from(checklist).filter((box) => box.checked).length;
+        const percent = Math.round((completed / total) * 100);
+        progressIndicator.style.width = `${percent}%`;
+        progressIndicator.setAttribute('aria-valuenow', percent);
+        progressText.textContent = `${completed} of ${total} actions ready`;
+      }
+
+      checklist.forEach((box) => {
+        box.addEventListener('change', updateProgress);
+      });
+
+      resetPlanButton.addEventListener('click', () => {
+        checklist.forEach((box) => {
+          box.checked = false;
+        });
+        updateProgress();
+      });
+
+      updateProgress();
+    </script>
+  </body>
+</html>
