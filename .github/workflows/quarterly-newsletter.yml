@@ -1,0 +1,126 @@
+name: Quarterly newsletter draft
+
+on:
+  schedule:
+    - cron: '0 12 1 */3 *'
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Generate newsletter draft
+        run: |
+          python automation/generate_newsletter.py \
+            --output newsletter/latest.md \
+            --metadata-output newsletter/latest.json
+
+      - name: Upload newsletter artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: quarterly-newsletter
+          path: |
+            newsletter/latest.md
+            newsletter/latest.json
+
+      - name: Extract metadata
+        id: meta
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('newsletter/latest.json').read_text())
+          print(f"subject={data['subject']}")
+          print(f"quarter_label={data['quarter_label']}")
+          PY
+
+      - name: Create or update quarterly draft issue
+        uses: actions/github-script@v7
+        env:
+          QUARTER_LABEL: ${{ steps.meta.outputs.quarter_label }}
+          SUBJECT: ${{ steps.meta.outputs.subject }}
+          REVIEWERS: ${{ vars.NEWSLETTER_REVIEWERS }}
+        with:
+          script: |
+            const fs = require('fs');
+            const core = require('@actions/core');
+            const labelName = 'newsletter-draft';
+            const quarterLabel = process.env.QUARTER_LABEL || 'Quarterly';
+            const subject = process.env.SUBJECT || 'Ransomware Resilience Briefing';
+            const reviewers = (process.env.REVIEWERS || '')
+              .split(',')
+              .map((name) => name.trim())
+              .filter(Boolean);
+
+            async function ensureLabel() {
+              try {
+                await github.rest.issues.getLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: labelName,
+                });
+              } catch (error) {
+                await github.rest.issues.createLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: labelName,
+                  color: '0e8a16',
+                  description: 'Auto-generated quarterly newsletter drafts',
+                });
+              }
+            }
+
+            const issueBody = fs.readFileSync('newsletter/latest.md', 'utf8');
+            const finalBody = `**Subject:** ${subject}\n\n${issueBody}\n\n---\nGenerated automatically by the quarterly newsletter workflow. Update the markdown and close the issue once the campaign ships.`;
+            const issueTitle = `${quarterLabel} newsletter draft`;
+
+            await ensureLabel();
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: labelName,
+              per_page: 100,
+            });
+
+            const existing = issues.find((issue) => issue.title === issueTitle);
+
+            if (existing) {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body: finalBody,
+              });
+            } else {
+              const { data: created } = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: issueTitle,
+                body: finalBody,
+                labels: [labelName],
+              });
+
+              if (reviewers.length) {
+                try {
+                  await github.rest.issues.addAssignees({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: created.number,
+                    assignees: reviewers,
+                  });
+                } catch (assignError) {
+                  core.warning(`Could not assign reviewers: ${assignError.message}`);
+                }
+              }
+            }
