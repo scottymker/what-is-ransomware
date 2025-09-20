@@ -782,6 +782,13 @@
             Subscribe to monthly insights featuring emerging threat intelligence, defensive playbooks, and training events you can share with your network. We respect your inbox—no spam, only actionable knowledge.
           </p>
           <form>
+          <form
+            action="https://buttondown.email/api/emails/embed-subscribe/what-is-ransomware"
+            method="post"
+            target="popupwindow"
+            onsubmit="window.open('https://buttondown.email/what-is-ransomware', 'popupwindow')"
+          >
+            <input type="hidden" name="embed" value="1" />
             <div>
               <label for="email">Email address</label>
               <input id="email" type="email" name="email" placeholder="you@example.com" required />
@@ -789,6 +796,7 @@
             <div>
               <label for="role">Your role</label>
               <input id="role" type="text" name="role" placeholder="Security Analyst, Teacher, Business Owner..." />
+              <input id="role" type="text" name="metadata__role" placeholder="Security Analyst, Teacher, Business Owner..." />
             </div>
             <button class="btn btn-primary" type="submit">Subscribe for updates</button>
           </form>
